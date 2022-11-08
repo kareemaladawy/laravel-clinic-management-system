@@ -85,7 +85,7 @@ class DiseaseAnalyzerScreen extends Screen
             $request->input('image.content', [])
         );
         $imageUrl = $user->attachment()->first()->url ?: null;
-        dd($imageUrl);
+        dd($user->attachment()->first()->url);
         $image = file_get_contents($imageUrl);
 
         $response = Http::attach('attachment', file_get_contents($imageUrl), 'image.jpg')
