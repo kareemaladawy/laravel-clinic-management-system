@@ -18,4 +18,3 @@ use Symfony\Component\Process\Process;
 */
 
 Route::view('/', 'home')->name('home');
-Route::get('/process', [ModelController::class, 'processImage']);
