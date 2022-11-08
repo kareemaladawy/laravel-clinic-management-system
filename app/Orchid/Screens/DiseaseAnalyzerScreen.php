@@ -80,17 +80,16 @@ class DiseaseAnalyzerScreen extends Screen
      */
     public function save(\Illuminate\Http\Request $request)
     {
-//        $user = auth()->user();
-//        $user->attachment()->sync(
-//            $request->input('image.content', [])
-//        );
-//        $imageUrl = $user->attachment()->first()->url ?: null;
-//        $image = file_get_contents($imageUrl);
-//
-//        $response = Http::attach('attachment', file_get_contents($imageUrl), 'image.jpg')
-//        ->post("http://206.189.48.21:80/");
+        $user = auth()->user();
+        $user->attachment()->sync(
+            $request->input('image.content', [])
+        );
+        $imageUrl = $user->attachment()->first()->url ?: null;
+        $image = file_get_contents($imageUrl);
 
-//        \Orchid\Support\Facades\Alert::success($response->json($key = 'prediction'));
-        \Orchid\Support\Facades\Alert::success('Disease detected: Possible glaucoma, please refer to suggestions dictionary in a few minutes to determine treatment method');
+        $response = Http::attach('attachment', file_get_contents($imageUrl), 'image.jpg')
+        ->post("http://206.189.48.21:80/");
+
+        \Orchid\Support\Facades\Alert::success($response->json($key = 'prediction'));
     }
 }
