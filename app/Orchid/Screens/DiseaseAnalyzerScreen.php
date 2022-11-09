@@ -88,7 +88,10 @@ class DiseaseAnalyzerScreen extends Screen
         $image = file_get_contents($imageUrl);
 
         $response = Http::attach('attachment', file_get_contents($imageUrl), 'image.jpg')
-        ->post("http://206.189.48.21:80/");
+        ->post("http://206.189.48.21:80/")
+        ->throw(function ($response, $e) {
+                return "error: " . $e;
+        })->json();
 
         \Orchid\Support\Facades\Alert::success($response->json($key = 'prediction'));
     }
