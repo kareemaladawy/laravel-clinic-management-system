@@ -4,9 +4,14 @@ namespace App\Models;
 
 use Orchid\Attachment\Attachable;
 use Orchid\Platform\Models\User as Authenticatable;
+use Laravel\Sanctum\hasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable
 {
+
+    use hasApiTokens,HasFactory,Notifiable;
     use Attachable;
     /**
      * The attributes that are mass assignable.
