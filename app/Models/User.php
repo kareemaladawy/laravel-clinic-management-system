@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Orchid\Attachment\Attachable;
 use Orchid\Platform\Models\User as Authenticatable;
-use Laravel\Sanctum\hasApiTokens;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
