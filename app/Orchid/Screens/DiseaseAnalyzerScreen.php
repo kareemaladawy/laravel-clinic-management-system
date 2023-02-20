@@ -85,14 +85,19 @@ class DiseaseAnalyzerScreen extends Screen
             $request->input('image.content', [])
         );
         $imageUrl = $user->attachment()->first()->url ?: null;
-        $image = file_get_contents($imageUrl);
 
-        $response = Http::attach('attachment', file_get_contents($imageUrl), 'image.jpg')
-            ->post("http://164.90.222.190:80/")
-            ->throw(function ($response, $e) {
-                return "error: " . $e;
-            })->json();
+        try {
+            $image = file_get_contents($imageUrl);
 
-        \Orchid\Support\Facades\Alert::success($response->json($key = 'prediction'));
+            $response = Http::attach('attachment', $image, 'image.jpg')
+                ->post("http://164.90.222.190:80/")
+                ->throw(function ($response, $e) {
+                    return "error: " . $e;
+                })->json();
+
+            \Orchid\Support\Facades\Alert::success($response->json($key = 'prediction'));
+        } catch (\Exception $e) {
+            \Orchid\Support\Facades\Alert::warning('an error occurred. please check ML server conncetion.');
+        }
     }
 }
