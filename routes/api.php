@@ -17,6 +17,3 @@ Route::group(['middleware'=>['auth:sanctum']], static function(){
     Route::post('/logout', [AuthController::class,'logout']);//protected
     Route::resource('/tasks',TasksController::class);//protected
 });
-
-
-
