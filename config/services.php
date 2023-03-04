@@ -31,4 +31,7 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'ChatSonic' => [
+        'API_KEY' => env('CHATSONIC_API_KEY'),
+    ]
 ];

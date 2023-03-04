@@ -46,7 +46,7 @@ return [
     | You can learn more here: https://laravel.com/docs/middleware
     |
     */
-
+    
     'middleware' => [
         'public'  => ['web'],
         'private' => ['web', 'platform'],

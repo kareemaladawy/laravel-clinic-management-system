@@ -50,7 +50,7 @@ class RoleListScreen extends Screen
     public function permission(): ?iterable
     {
         return [
-            'platform.systems.roles',
+            'platform.system.roles',
         ];
     }
 
@@ -64,7 +64,7 @@ class RoleListScreen extends Screen
         return [
             Link::make(__('Add'))
                 ->icon('plus')
-                ->href(route('platform.systems.roles.create')),
+                ->href(route('platform.system.roles.create')),
         ];
     }
 

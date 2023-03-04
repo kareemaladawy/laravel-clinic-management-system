@@ -35,6 +35,14 @@ class UserListLayout extends Table
                     return new Persona($user->presenter());
                 }),
 
+            TD::make('role', __('Roles'))
+                ->sort()
+                ->cantHide()
+                ->filter(Input::make())
+                ->render(function (User $user) {
+                    return $user->getRoles()->pluck('name');
+                }),
+
             TD::make('email', __('Email'))
                 ->sort()
                 ->cantHide()
@@ -49,33 +57,6 @@ class UserListLayout extends Table
                         ]);
                 }),
 
-            TD::make('updated_at', __('Last detection result'))
-                ->sort()
-                ->render(function (User $user) {
-//                    return $user->updated_at->toDateTimeString();
-                    return 'Possible glaucoma';
-                }),
-
-            TD::make('updated_at', __('Last detection date'))
-                ->sort()
-                ->render(function (User $user) {
-                    return $user->updated_at->toDateTimeString();
-                }),
-
-            TD::make('updated_at', __('Suggested treatment methods'))
-                ->sort()
-                ->render(function (User $user) {
-//                    return $user->updated_at->toDateTimeString();
-                    return 'Lowering intraocular pressure, eye drops...';
-                }),
-
-            TD::make('updated_at', __('Notes'))
-                ->sort()
-                ->render(function (User $user) {
-//                    return $user->updated_at->toDateTimeString();
-                    return 'Patient: Ahmed Albakri, Time: 2:18 PM, Day: 4 Nov 2022';
-                }),
-
             TD::make(__('Actions'))
                 ->align(TD::ALIGN_CENTER)
                 ->width('100px')
@@ -83,9 +64,8 @@ class UserListLayout extends Table
                     return DropDown::make()
                         ->icon('options-vertical')
                         ->list([
-
                             Link::make(__('Edit'))
-                                ->route('platform.systems.users.edit', $user->id)
+                                ->route('platform.system.user.edit', $user->id)
                                 ->icon('pencil'),
 
                             Button::make(__('Delete'))

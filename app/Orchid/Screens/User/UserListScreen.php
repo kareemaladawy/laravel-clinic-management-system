@@ -40,17 +40,7 @@ class UserListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Patients';
-    }
-
-    /**
-     * Display header description.
-     *
-     * @return string|null
-     */
-    public function description(): ?string
-    {
-        return 'All registered patients';
+        return 'System Users';
     }
 
     /**
@@ -59,7 +49,7 @@ class UserListScreen extends Screen
     public function permission(): ?iterable
     {
         return [
-            'platform.systems.users',
+            'platform.system.users',
         ];
     }
 
@@ -73,7 +63,7 @@ class UserListScreen extends Screen
         return [
             Link::make(__('Add'))
                 ->icon('plus')
-                ->route('platform.systems.users.create'),
+                ->route('platform.system.users.create'),
         ];
     }
 
@@ -120,7 +110,7 @@ class UserListScreen extends Screen
 
         $user->fill($request->input('user'))->save();
 
-        Toast::info(__('User was saved.'));
+        Toast::info(__('Saved.'));
     }
 
     /**
@@ -130,6 +120,6 @@ class UserListScreen extends Screen
     {
         User::findOrFail($request->get('id'))->delete();
 
-        Toast::info(__('User was removed'));
+        Toast::info(__('Removed.'));
     }
 }

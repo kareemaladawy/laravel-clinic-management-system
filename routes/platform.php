@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Orchid\Screens\DiseaseAnalyzerScreen;
+use App\Orchid\Screens\Detector\DetectorScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
 use App\Orchid\Screens\Examples\ExampleFieldsAdvancedScreen;
@@ -10,6 +10,9 @@ use App\Orchid\Screens\Examples\ExampleFieldsScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\Patient\PatientCreateScreen;
+use App\Orchid\Screens\Patient\PatientEditScreen;
+use App\Orchid\Screens\Patient\PatientListScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
@@ -43,82 +46,105 @@ Route::screen('profile', UserProfileScreen::class)
             ->push(__('Profile'), route('platform.profile'));
     });
 
+
+
+// Users
+
 // Platform > System > Users
-Route::screen('users/{user}/edit', UserEditScreen::class)
-    ->name('platform.systems.users.edit')
-    ->breadcrumbs(function (Trail $trail, $user) {
+Route::screen('users', UserListScreen::class)
+    ->name('platform.system.users')
+    ->breadcrumbs(function (Trail $trail) {
         return $trail
-            ->parent('platform.systems.users')
-            ->push(__('User'), route('platform.systems.users.edit', $user));
+            ->parent('platform.index')
+            ->push(__('Users'), route('platform.system.users'));
     });
 
 // Platform > System > Users > Create
 Route::screen('users/create', UserEditScreen::class)
-    ->name('platform.systems.users.create')
+    ->name('platform.system.users.create')
     ->breadcrumbs(function (Trail $trail) {
         return $trail
             ->parent('platform.systems.users')
-            ->push(__('Create'), route('platform.systems.users.create'));
+            ->push(__('Create'), route('platform.system.users.create'));
     });
 
-// Platform > System > Users > User
-Route::screen('users', UserListScreen::class)
-    ->name('platform.systems.users')
+// Platform > System > Users > User > Edit
+Route::screen('users/{user}/edit', UserEditScreen::class)
+    ->name('platform.system.user.edit')
+    ->breadcrumbs(function (Trail $trail, $user) {
+        return $trail
+            ->parent('platform.system.users')
+            ->push(__('User'), route('platform.system.user.edit', $user));
+    });
+
+
+
+// Patients
+
+// Platform > System > Patients
+Route::screen('patients', PatientListScreen::class)
+    ->name('platform.system.patients')
     ->breadcrumbs(function (Trail $trail) {
         return $trail
             ->parent('platform.index')
-            ->push(__('Users'), route('platform.systems.users'));
+            ->push(__('Patients'), route('platform.system.patients'));
     });
+
+// Platform > System > Patients > Create
+Route::screen('patients/create', PatientCreateScreen::class)
+->name('platform.system.patients.create')
+->breadcrumbs(function (Trail $trail) {
+    return $trail
+        ->parent('platform.system.patients')
+        ->push(__('Create Patient'), route('platform.system.patients.create'));
+});
+
+// Platform > System > Patients > Patient > Edit
+Route::screen('patients/{patient}/edit', PatientEditScreen::class)
+    ->name('platform.system.patient.edit')
+    ->breadcrumbs(function (Trail $trail, $patinet) {
+        return $trail
+            ->parent('platform.system.patients')
+            ->push(__('Edit Patient'), route('platform.system.patient.edit', $patinet));
+    });
+
+
+
+// Roles
 
 // Platform > System > Roles > Role
 Route::screen('roles/{role}/edit', RoleEditScreen::class)
-    ->name('platform.systems.roles.edit')
+    ->name('platform.system.roles.edit')
     ->breadcrumbs(function (Trail $trail, $role) {
         return $trail
-            ->parent('platform.systems.roles')
-            ->push(__('Role'), route('platform.systems.roles.edit', $role));
+            ->parent('platform.system.roles')
+            ->push(__('Role'), route('platform.system.roles.edit', $role));
     });
 
 // Platform > System > Roles > Create
 Route::screen('roles/create', RoleEditScreen::class)
-    ->name('platform.systems.roles.create')
+    ->name('platform.system.roles.create')
     ->breadcrumbs(function (Trail $trail) {
         return $trail
-            ->parent('platform.systems.roles')
-            ->push(__('Create'), route('platform.systems.roles.create'));
+            ->parent('platform.system.roles')
+            ->push(__('Create'), route('platform.system.roles.create'));
     });
 
 // Platform > System > Roles
 Route::screen('roles', RoleListScreen::class)
-    ->name('platform.systems.roles')
+    ->name('platform.system.roles')
     ->breadcrumbs(function (Trail $trail) {
         return $trail
             ->parent('platform.index')
-            ->push(__('Roles'), route('platform.systems.roles'));
+            ->push(__('Roles'), route('platform.system.roles'));
     });
 
-// Example...
-Route::screen('example', ExampleScreen::class)
-    ->name('platform.example')
+
+// Detector
+Route::screen('detector', DetectorScreen::class)
+    ->name('platform.system.detector')
     ->breadcrumbs(function (Trail $trail) {
         return $trail
             ->parent('platform.index')
-            ->push('Example screen');
+            ->push(__('Detector'), route('platform.system.detector'));
     });
-
-Route::screen('diseaseanalyzer', DiseaseAnalyzerScreen::class)
-    ->name('platform.diseaseanalyzer')
-    ->breadcrumbs(function (Trail $trail) {
-        return $trail
-            ->parent('platform.index')
-            ->push(__('Disease Analyzer'), route('platform.diseaseanalyzer'));
-    });
-
-Route::screen('example-fields', ExampleFieldsScreen::class)->name('platform.example.fields');
-Route::screen('example-layouts', ExampleLayoutsScreen::class)->name('platform.example.layouts');
-Route::screen('example-charts', ExampleChartsScreen::class)->name('platform.example.charts');
-Route::screen('example-editors', ExampleTextEditorsScreen::class)->name('platform.example.editors');
-Route::screen('example-cards', ExampleCardsScreen::class)->name('platform.example.cards');
-Route::screen('example-advanced', ExampleFieldsAdvancedScreen::class)->name('platform.example.advanced');
-
-//Route::screen('idea', Idea::class, 'platform.screens.idea');

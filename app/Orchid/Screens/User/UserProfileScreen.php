@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens\User;
 
+use App\Models\Doctor;
 use App\Orchid\Layouts\User\ProfilePasswordLayout;
 use App\Orchid\Layouts\User\UserEditLayout;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class UserProfileScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Update your account details such as name, email address and password';
+        return 'Update your account details';
     }
 
     /**
@@ -71,7 +72,7 @@ class UserProfileScreen extends Screen
         return [
             Layout::block(UserEditLayout::class)
                 ->title(__('Profile Information'))
-                ->description(__("Update your account's profile information and email address."))
+                ->description(__("Update your account's profile information."))
                 ->commands(
                     Button::make(__('Save'))
                         ->type(Color::DEFAULT())
@@ -97,10 +98,10 @@ class UserProfileScreen extends Screen
     public function save(Request $request): void
     {
         $request->validate([
-            'user.name'  => 'required|string',
+            'user.name'  => 'required|string|max:255',
             'user.email' => [
                 'required',
-                Rule::unique(User::class, 'email')->ignore($request->user()),
+                Rule::unique(Doctor::class, 'email')->ignore($request->user()),
             ],
         ]);
 
@@ -119,7 +120,7 @@ class UserProfileScreen extends Screen
         $guard = config('platform.guard', 'web');
         $request->validate([
             'old_password' => 'required|current_password:'.$guard,
-            'password'     => 'required|confirmed',
+            'password'     => 'required',
         ]);
 
         tap($request->user(), function ($user) use ($request) {

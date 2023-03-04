@@ -19,8 +19,6 @@ class PlatformProvider extends OrchidServiceProvider
     public function boot(Dashboard $dashboard): void
     {
         parent::boot($dashboard);
-
-        // ...
     }
 
     /**
@@ -34,19 +32,16 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('monitor')
                 ->route('platform.main'),
 
-            Menu::make(__('Disease Analyzer'))
-                ->icon('chart')
-                ->route('platform.diseaseanalyzer')
-                ->permission('platform.users.diseaseanalyzer')
-                ->title(__('Services'))
-                ->badge(function () {
-                    return 7;
-                }),
+            Menu::make(__('Detector'))
+                ->icon('eye')
+                ->route('platform.system.detector')
+                ->permission('platform.system.detector')
+                ->title(__('Services')),
 
             Menu::make(__('Patients'))
                 ->icon('user')
-                ->route('platform.systems.users')
-                ->permission('platform.systems.users')
+                ->route('platform.system.patients')
+                ->permission('platform.system.patients')
                 ->title(__('Navigation')),
 
 
@@ -109,8 +104,13 @@ class PlatformProvider extends OrchidServiceProvider
 //
             Menu::make(__('Roles'))
                 ->icon('lock')
-                ->route('platform.systems.roles')
-                ->permission('platform.systems.roles'),
+                ->route('platform.system.roles')
+                ->permission('platform.system.roles'),
+
+            Menu::make(__('Users'))
+                ->icon('user')
+                ->route('platform.system.users')
+                ->permission('platform.system.users'),
         ];
     }
 
@@ -133,9 +133,10 @@ class PlatformProvider extends OrchidServiceProvider
     {
         return [
             ItemPermission::group(__('System'))
-                ->addPermission('platform.systems.roles', __('Roles'))
-                ->addPermission('platform.systems.users', __('Users'))
-                ->addPermission('platform.users.diseaseanalyzer', __('Disease Analyzer'))
+                ->addPermission('platform.system.roles', __('Roles'))
+                ->addPermission('platform.system.patients', __('Patients'))
+                ->addPermission('platform.system.users', __('Users'))
+                ->addPermission('platform.system.detector', __('Detector'))
         ];
     }
 }

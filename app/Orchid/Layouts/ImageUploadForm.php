@@ -31,15 +31,15 @@ class ImageUploadForm extends Rows
     {
         return [
             Select::make('image.patient')
-            ->options([
-                '1' => 'Ahmed Albakri'
-            ])
-            ->empty('Select patient')
-            ->title('Patient'),
+                ->options([
+                    '1' => 'What ha?'
+                ])
+                ->empty('Select patient')
+                ->title('Patient'),
 
             Picture::make('image.content')
                 ->title(__('Image'))
                 ->targetid()
-            ];
+        ];
     }
 }

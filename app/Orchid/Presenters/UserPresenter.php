@@ -38,7 +38,7 @@ class UserPresenter extends Presenter implements Searchable, Personable
         return (string) Str::of($roles)
             ->limit(20)
             ->whenEmpty(function () {
-                return __('Regular user');
+                return __('');
             });
     }
 
@@ -47,7 +47,7 @@ class UserPresenter extends Presenter implements Searchable, Personable
      */
     public function url(): string
     {
-        return route('platform.systems.users.edit', $this->entity);
+        return route('platform.system.user.edit', $this->entity);
     }
 
     /**

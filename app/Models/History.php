@@ -5,19 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Detection extends Model
+class History extends Model
 {
     use HasFactory;
 
     protected $gurded = [];
 
     protected $allowedFilters = [
-        'patient_id',
-        'doctor_id',
-        'disease',
-        'state',
-        'type',
-        'comment'
+        'properties',
     ];
 
     protected $allowedSorts = [

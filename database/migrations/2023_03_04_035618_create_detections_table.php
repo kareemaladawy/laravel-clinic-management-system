@@ -15,18 +15,17 @@ return new class extends Migration
     {
         Schema::create('detections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')
-                ->references('patients')
-                ->on('id');
-            $table->foreignId('doctor_id')
-                ->references('doctors')
-                ->on('id');
-            $table->string('disease');
-            $table->string('state');
-            $table->longText('notes');
-            $table->longText('prescription');
+            $table->foreignId('user_id')
+                ->references('id')->on('users');
+            $table->foreignUuid('patient_id')
+                ->references('id')->on('patients');
+            $table->string('disease')->nullable();
+            $table->string('state')->nullable();
+            $table->string('type')->nullable();
+            $table->longText('comment')->nullable();
             $table->timestamps();
         });
+
     }
 
     /**

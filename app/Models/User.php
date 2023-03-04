@@ -10,14 +10,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable
 {
-
     use hasApiTokens, HasFactory, Notifiable, Attachable;
 
-    protected $fillable = [
+    protected $gurded = [];
+
+    protected $allowedFilters = [
         'name',
         'email',
-        'password',
-        'permissions',
+        'phone_number',
+        'specialty',
+        'gender'
+    ];
+
+    protected $allowedSorts = [
+        'created_at',
+        'updated_at'
     ];
 
 
@@ -31,19 +38,4 @@ class User extends Authenticatable
         'permissions' => 'array',
     ];
 
-
-    protected $allowedFilters = [
-        'id',
-        'name',
-        'email',
-        'permissions',
-    ];
-
-    protected $allowedSorts = [
-        'id',
-        'name',
-        'email',
-        'updated_at',
-        'created_at',
-    ];
 }

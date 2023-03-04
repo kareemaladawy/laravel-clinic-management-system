@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Detection extends Model
+class Note extends Model
 {
     use HasFactory;
 
@@ -13,11 +13,7 @@ class Detection extends Model
 
     protected $allowedFilters = [
         'patient_id',
-        'doctor_id',
-        'disease',
-        'state',
-        'type',
-        'comment'
+        'body'
     ];
 
     protected $allowedSorts = [
