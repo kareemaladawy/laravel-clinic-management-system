@@ -3,7 +3,7 @@
 namespace App\Orchid\Screens\Treatment;
 
 use App\Models\Treatment;
-use App\Orchid\Layouts\Treatment\TreatmentlistLayout;
+use App\Orchid\Layouts\Treatment\TreatmentListLayout;
 use Orchid\Screen\Screen;
 use Orchid\Screen\Actions\Link;
 
