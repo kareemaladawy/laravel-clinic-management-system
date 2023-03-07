@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Orchid\Layouts\History;
+namespace App\Orchid\Layouts\Note;
 
 use App\Models\Patient;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Layouts\Rows;
 
-class HistoryCreateLayout extends Rows
+class NoteCreateLayout extends Rows
 {
     protected $target = '';
 
     protected function fields(): iterable
     {
         return [
-            Relation::make('history.patient_id')
+            Relation::make('note.patient_id')
                 ->fromModel(Patient::class, 'name')
-                ->required()
                 ->title('Choose patient'),
 
-            TextArea::make('history.properties')
-                ->title(__('Properties'))
+            TextArea::make('note.body')
+                ->required()
+                ->title(__('Body'))
         ];
     }
 }

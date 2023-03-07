@@ -19,6 +19,8 @@ use App\Orchid\Screens\Patient\PatientListScreen;
 use App\Orchid\Screens\Detection\DetectionListScreen;
 use App\Orchid\Screens\Appointment\AppointmentEditScreen;
 use App\Orchid\Screens\Appointment\AppointmentListScreen;
+use App\Orchid\Screens\Note\NoteEditScreen;
+use App\Orchid\Screens\Note\NoteListScreen;
 use App\Orchid\Screens\Treatment\TreatmentEditScreen;
 use App\Orchid\Screens\Treatment\TreatmentListScreen;
 
@@ -176,6 +178,27 @@ Route::screen('treatments/create/{treatment?}', TreatmentEditScreen::class)
         ->push(__('Create'), route('platform.system.treatment'));
 });
 
+
+
+// Notes
+
+// Platform > System > Notes
+Route::screen('notes', NoteListScreen::class)
+->name('platform.system.notes')
+->breadcrumbs(function (Trail $trail) {
+    return $trail
+        ->parent('platform.index')
+        ->push(__('Notes'), route('platform.system.notes'));
+});
+
+// Platform > System > Notes > Note
+Route::screen('notes/create/{note?}', NoteEditScreen::class)
+->name('platform.system.note')
+->breadcrumbs(function (Trail $trail) {
+    return $trail
+        ->parent('platform.system.notes')
+        ->push(__('Create'), route('platform.system.note'));
+});
 
 
 // Roles
