@@ -11,6 +11,8 @@ class History extends Model
 
     protected $guarded = [];
 
+    protected $touches = ['patient'];
+
     protected $allowedFilters = [
         'properties',
         'patient'

@@ -30,7 +30,7 @@ class HistoryListScreen extends Screen
         return [
             Link::make('Add')
                 ->icon('pencil')
-                ->route('platform.system.appointment')
+                ->route('platform.system.history')
         ];
     }
 
