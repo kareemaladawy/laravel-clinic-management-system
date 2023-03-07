@@ -30,6 +30,11 @@ class Patient extends Model
         return $this->hasOne(History::class);
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
     public function getHistoryAttribute(): string
     {
         return $this->history->properties;

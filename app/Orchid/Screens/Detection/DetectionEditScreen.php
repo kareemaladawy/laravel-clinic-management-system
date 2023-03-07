@@ -23,7 +23,7 @@ class DetectionEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'DetectionEditScreen';
+        return 'Edit';
     }
 
     /**

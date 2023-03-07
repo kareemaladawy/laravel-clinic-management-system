@@ -15,6 +15,8 @@ use App\Orchid\Screens\Detector\DetectorScreen;
 use App\Orchid\Screens\Patient\PatientEditScreen;
 use App\Orchid\Screens\Patient\PatientListScreen;
 use App\Orchid\Screens\Detection\DetectionListScreen;
+use App\Orchid\Screens\Appointment\AppointmentEditScreen;
+use App\Orchid\Screens\Appointment\AppointmentListScreen;
 
 
 // Main
@@ -104,6 +106,28 @@ Route::screen('detections/edit/{detection}', DetectionListScreen::class)
         ->parent('platform.system.detections')
         ->push(__('Edit'), route('platform.system.detection'));
 });
+
+
+
+// Appointments
+
+// Platform > System > Appointments
+Route::screen('appointments', AppointmentListScreen::class)
+    ->name('platform.system.appointments')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('platform.index')
+            ->push(__('Appointments'), route('platform.system.appointments'));
+    });
+
+// Platform > System > Appointments > Appointment
+Route::screen('appointments/create/{appointment?}', AppointmentEditScreen::class)
+    ->name('platform.system.appointment')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('platform.system.appointments')
+            ->push(__('Create'), route('platform.system.appointment'));
+    });
 
 
 

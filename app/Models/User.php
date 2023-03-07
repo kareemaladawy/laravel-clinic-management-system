@@ -43,4 +43,9 @@ class User extends Authenticatable
         return $this->hasMany(Patient::class, 'created_by', 'user_id');
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
 }

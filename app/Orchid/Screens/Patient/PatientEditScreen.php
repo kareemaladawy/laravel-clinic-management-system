@@ -7,6 +7,7 @@ use Orchid\Screen\Screen;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Support\Facades\Alert;
+use Orchid\Support\Facades\Toast;
 use Orchid\Support\Facades\Layout;
 use App\Orchid\Layouts\Patient\PatientData;
 use App\Orchid\Layouts\Patient\PatientCreateLayout;
@@ -26,13 +27,6 @@ class PatientEditScreen extends Screen
     public function name(): ?string
     {
         return $this->patient->exists ? 'Edit patient' : 'Add patient';
-    }
-
-    public function permission(): ?iterable
-    {
-        return [
-            'platform.system.patients',
-        ];
     }
 
     public function commandBar(): iterable
@@ -60,7 +54,14 @@ class PatientEditScreen extends Screen
     {
         $patient->fill($request->get('patient'));
         $patient->save();
-        Alert::info('Saved.');
+        Toast::info('Saved.');
+        return redirect()->route('platform.system.patients');
+    }
+
+    public function remove(Patient $patient)
+    {
+        $patient->delete();
+        Toast::info(__('Removed.'));
         return redirect()->route('platform.system.patients');
     }
 }

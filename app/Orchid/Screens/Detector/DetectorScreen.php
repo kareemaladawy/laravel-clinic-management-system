@@ -55,6 +55,7 @@ class DetectorScreen extends Screen
      */
     public function detect(Request $request)
     {
+        dd($request->patient);
         $user = $request->user();
 
         $user->attachment()->sync(

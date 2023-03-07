@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Orchid\Screens\Patient;
+namespace App\Orchid\Screens\Appointment;
 
-use App\Models\Patient;
-use App\Orchid\Layouts\Patient\PatientListLayout;
-use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
+use App\Models\Appointment;
+use Orchid\Screen\Actions\Link;
+use App\Orchid\Layouts\Appointment\AppointmentListLayout;
 
-class PatientListScreen extends Screen
+class AppointmentListScreen extends Screen
 {
     public function query(): iterable
     {
         return [
-            'patients' => Patient::paginate(10)
+            'appointments' => Appointment::paginate(10)
         ];
     }
 
     public function name(): ?string
     {
-        return 'Patients';
+        return 'Appointments';
     }
 
     public function commandBar(): iterable
@@ -26,14 +26,14 @@ class PatientListScreen extends Screen
         return [
             Link::make('Add')
                 ->icon('pencil')
-                ->route('platform.system.patient')
+                ->route('platform.system.appointment')
         ];
     }
 
     public function layout(): iterable
     {
         return [
-            PatientListLayout::class
+            AppointmentListLayout::class
         ];
     }
 }
