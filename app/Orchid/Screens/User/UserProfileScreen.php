@@ -101,7 +101,7 @@ class UserProfileScreen extends Screen
             'user.name'  => 'required|string|max:255',
             'user.email' => [
                 'required',
-                Rule::unique(Doctor::class, 'email')->ignore($request->user()),
+                Rule::unique(User::class, 'email')->ignore($request->user()),
             ],
         ]);
 
