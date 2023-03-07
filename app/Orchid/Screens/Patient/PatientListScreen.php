@@ -12,7 +12,7 @@ class PatientListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'patients' => Patient::paginate()
+            'patients' => Patient::with('history')->paginate(10)
         ];
     }
 
@@ -24,9 +24,9 @@ class PatientListScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Link::make('Create new')
+            Link::make('Add new')
                 ->icon('pencil')
-                ->route('platform.system.patients.create')
+                ->route('platform.system.patient')
         ];
     }
 

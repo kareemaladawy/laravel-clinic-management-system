@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('hsitory', function (Blueprint $table) {
+        Schema::create('histories', function (Blueprint $table) {
             $table->id();
             $table->foreignUuid('patient_id')
                 ->references('id')->on('patients')->constrained();
-            $table->json('properties')->nullable();
+            $table->longText('properties')->nullable();
             $table->timestamps();
         });
     }

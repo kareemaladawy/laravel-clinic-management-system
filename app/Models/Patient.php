@@ -2,35 +2,41 @@
 
 namespace App\Models;
 
+use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Orchid\Screen\AsSource;
 
 class Patient extends Model
 {
-    use HasFactory;
+    use HasFactory, UUID, AsSource;
 
-    protected $fillable = [
-        'name',
-        'email',
-        'phone_number',
-        'gender',
-        'birthday',
-        'location',
-        'medical_info'
-    ];
+    protected $guarded = [];
 
     protected $allowedFilters = [
-        'id',
         'name',
-        'email',
-        'gender',
-        'location',
-        'medical_info',
-        'permissions'
-    ];
-
-    protected $allowedSorts = [
         'updated_at',
         'created_at'
     ];
+
+    protected $allowedSorts = [
+        'name',
+        'updated_at',
+        'created_at'
+    ];
+
+    public function history()
+    {
+        return $this->hasOne(History::class);
+    }
+
+    public function getHistoryAttribute(): string
+    {
+        return $this->history->properties;
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'user_id');
+    }
 }

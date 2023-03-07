@@ -9,7 +9,7 @@ class History extends Model
 {
     use HasFactory;
 
-    protected $gurded = [];
+    protected $guarded = [];
 
     protected $allowedFilters = [
         'properties',
@@ -19,4 +19,9 @@ class History extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }

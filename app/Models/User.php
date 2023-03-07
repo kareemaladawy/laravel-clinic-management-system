@@ -38,4 +38,9 @@ class User extends Authenticatable
         'permissions' => 'array',
     ];
 
+    public function patients()
+    {
+        return $this->hasMany(Patient::class, 'created_by', 'user_id');
+    }
+
 }

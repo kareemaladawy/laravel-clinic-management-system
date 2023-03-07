@@ -22,17 +22,6 @@ use App\Orchid\Screens\User\UserProfileScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
-/*
-|--------------------------------------------------------------------------
-| Dashboard Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the need "dashboard" middleware group. Now create something great!
-|
-*/
-
 // Main
 Route::screen('/main', PlatformScreen::class)
     ->name('platform.main');
@@ -90,22 +79,13 @@ Route::screen('patients', PatientListScreen::class)
             ->push(__('Patients'), route('platform.system.patients'));
     });
 
-// Platform > System > Patients > Create
-Route::screen('patients/create', PatientCreateScreen::class)
-->name('platform.system.patients.create')
-->breadcrumbs(function (Trail $trail) {
-    return $trail
-        ->parent('platform.system.patients')
-        ->push(__('Create Patient'), route('platform.system.patients.create'));
-});
-
-// Platform > System > Patients > Patient > Edit
-Route::screen('patients/{patient}/edit', PatientEditScreen::class)
-    ->name('platform.system.patient.edit')
-    ->breadcrumbs(function (Trail $trail, $patinet) {
+// Platform > System > Patients > Patient
+Route::screen('patients/create/{patient?}', PatientEditScreen::class)
+    ->name('platform.system.patient')
+    ->breadcrumbs(function (Trail $trail) {
         return $trail
             ->parent('platform.system.patients')
-            ->push(__('Edit Patient'), route('platform.system.patient.edit', $patinet));
+            ->push(__('Create'), route('platform.system.patient'));
     });
 
 
