@@ -59,6 +59,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.system.appointments')
                 ->permission('platform.system.appointments'),
 
+            Menu::make(__('Treatments'))
+                ->icon('paper-clip')
+                ->route('platform.system.treatments')
+                ->permission('platform.system.treatments'),
+
             Menu::make(__('Roles'))
                 ->icon('lock')
                 ->route('platform.system.roles')
@@ -97,6 +102,8 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.system.detections', __('Detections'))
                 ->addPermission('platform.system.appointments', __('Appointments'))
                 ->addPermission('platform.system.histories', __('Histories'))
+                ->addPermission('platform.system.treatments', __('Treatments'))
+                ->addPermission('platform.system.notes', __('notes'))
         ];
     }
 }

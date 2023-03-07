@@ -19,7 +19,8 @@ use App\Orchid\Screens\Patient\PatientListScreen;
 use App\Orchid\Screens\Detection\DetectionListScreen;
 use App\Orchid\Screens\Appointment\AppointmentEditScreen;
 use App\Orchid\Screens\Appointment\AppointmentListScreen;
-
+use App\Orchid\Screens\Treatment\TreatmentEditScreen;
+use App\Orchid\Screens\Treatment\TreatmentListScreen;
 
 // Main
 Route::screen('/main', PlatformScreen::class)
@@ -144,13 +145,35 @@ Route::screen('histories',HistoryListScreen::class)
         ->push(__('Histories'), route('platform.system.histories'));
 });
 
-// Platform > System > Histories >History
+// Platform > System > Histories > History
 Route::screen('histories/create/{history?}',HistoryEditScreen::class)
 ->name('platform.system.history')
 ->breadcrumbs(function (Trail $trail) {
     return $trail
         ->parent('platform.system.histories')
         ->push(__('Create'), route('platform.system.history'));
+});
+
+
+
+// Treatments
+
+// Platform > System > Treatments
+Route::screen('treatments', TreatmentListScreen::class)
+->name('platform.system.treatments')
+->breadcrumbs(function (Trail $trail) {
+    return $trail
+        ->parent('platform.index')
+        ->push(__('Treatments'), route('platform.system.treatments'));
+});
+
+// Platform > System > Treatments > Treatment
+Route::screen('treatments/create/{treatment?}', TreatmentEditScreen::class)
+->name('platform.system.treatment')
+->breadcrumbs(function (Trail $trail) {
+    return $trail
+        ->parent('platform.system.treatments')
+        ->push(__('Create'), route('platform.system.treatment'));
 });
 
 
