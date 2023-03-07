@@ -25,6 +25,11 @@ class Patient extends Model
         'created_at'
     ];
 
+    public function getHistoryAttribute(): string
+    {
+        return $this->history->properties;
+    }
+
     public function history()
     {
         return $this->hasOne(History::class);
@@ -38,11 +43,6 @@ class Patient extends Model
     public function treatments()
     {
         return $this->hasMany(Treatment::class);
-    }
-
-    public function getHistoryAttribute(): string
-    {
-        return $this->history->properties;
     }
 
     public function doctor()

@@ -10,21 +10,8 @@ use Orchid\Screen\Layouts\Table;
 
 class DetectionListLayout extends Table
 {
-    /**
-     * Data source.
-     *
-     * The name of the key to fetch it from the query.
-     * The results of which will be elements of the table.
-     *
-     * @var string
-     */
     protected $target = 'detections';
 
-    /**
-     * Get the table cells to be displayed.
-     *
-     * @return TD[]
-     */
     protected function columns(): iterable
     {
         return [
@@ -45,11 +32,11 @@ class DetectionListLayout extends Table
             TD::make('created_at', 'Created at')
                 ->sort()->filter()
                 ->render(function (Detection $detection) {
-                    return Carbon::parse($detection->created_at);
+                    return Carbon::parse($detection->created_at)->format('g:i A');
                 }),
-            TD::make('updated_at', 'Last edit at')->sort()->filter()
+            TD::make('updated_at', 'Last update at')->sort()->filter()
                 ->render(function (Detection $detection) {
-                    return Carbon::parse($detection->created_at);
+                    return Carbon::parse($detection->updated_at)->format('g:i A');
                 }),
         ];
     }

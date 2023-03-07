@@ -34,20 +34,20 @@ class AppointmentListLayout extends Table
                 ->render(function (Appointment $appointment) {
                     return Carbon::parse($appointment->time)->format('g:i A');
                 }),
-            TD::make('completed', 'Completed')
+            TD::make('completed', 'State')
                 ->render(function (Appointment $appointment) {
-                    return $appointment->completed ? 'yes' : 'no';
+                    return $appointment->completed ? 'completed' : 'pending';
                 })
                 ->filter(),
             TD::make('created_at', 'Created at')
                 ->sort()->filter()
                 ->render(function (Appointment $appointment) {
-                    return Carbon::parse($appointment->created_at);
+                    return Carbon::parse($appointment->created_at)->format('g:i A');
                 }),
             TD::make('updated_at', 'Last edit at')
                 ->sort()->filter()
                 ->render(function (Appointment $appointment) {
-                    return Carbon::parse($appointment->created_at);
+                    return Carbon::parse($appointment->updated_at)->format('g:i A');
                 }),
         ];
     }

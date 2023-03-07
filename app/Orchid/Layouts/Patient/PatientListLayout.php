@@ -17,6 +17,8 @@ class PatientListLayout extends Table
         return [
             TD::make('id', 'Id'),
             TD::make('name', 'Name')
+                ->sort()
+                ->filter()
                 ->render(function (Patient $patient) {
                     return Link::make($patient->name)
                         ->route('platform.system.patient', $patient);
@@ -26,11 +28,11 @@ class PatientListLayout extends Table
             TD::make('created_at', 'Created at')
                 ->sort()->filter()
                 ->render(function (Patient $patient) {
-                    return Carbon::parse($patient->created_at);
+                    return Carbon::parse($patient->created_at)->format('g:i A');
                 }),
-            TD::make('updated_at', 'Last edit at')->sort()->filter()
+            TD::make('updated_at', 'Last update at')->sort()->filter()
                 ->render(function (Patient $patient) {
-                    return Carbon::parse($patient->created_at);
+                    return Carbon::parse($patient->updated_at)->format('g:i A');
                 }),
         ];
     }

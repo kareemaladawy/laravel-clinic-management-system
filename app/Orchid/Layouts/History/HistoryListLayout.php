@@ -35,13 +35,13 @@ class HistoryListLayout extends Table
                 }),
             TD::make('created_at', 'Created at')
                 ->sort()->filter()
-                ->render(function (History $History) {
-                    return Carbon::parse($History->created_at);
+                ->render(function (History $history) {
+                    return Carbon::parse($history->created_at)->format('g:i A');
                 }),
             TD::make('updated_at', 'Last edit at')
                 ->sort()->filter()
-                ->render(function (History $History) {
-                    return Carbon::parse($History->created_at);
+                ->render(function (History $history) {
+                    return Carbon::parse($history->updated_at)->format('g:i A');
                 }),
         ];
     }

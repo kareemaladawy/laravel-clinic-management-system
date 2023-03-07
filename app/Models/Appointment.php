@@ -20,7 +20,7 @@ class Appointment extends Model
         'updated_at'
     ];
 
-    protected $allowesSorts = [
+    protected $allowedSorts = [
         'date',
         'time',
         'completed',
