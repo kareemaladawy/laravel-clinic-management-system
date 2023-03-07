@@ -45,9 +45,14 @@ class PlatformProvider extends OrchidServiceProvider
                 ->title(__('Navigation')),
 
             Menu::make(__('Patients'))
-                ->icon('user')
+                ->icon('friends')
                 ->route('platform.system.patients')
                 ->permission('platform.system.patients'),
+
+            Menu::make(__('Histories'))
+                ->icon('history')
+                ->route('platform.system.histories')
+                ->permission('platform.system.histories'),
 
             Menu::make(__('Appointments'))
                 ->icon('calendar')
@@ -91,6 +96,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.system.detector', __('Detector'))
                 ->addPermission('platform.system.detections', __('Detections'))
                 ->addPermission('platform.system.appointments', __('Appointments'))
+                ->addPermission('platform.system.histories', __('Histories'))
         ];
     }
 }

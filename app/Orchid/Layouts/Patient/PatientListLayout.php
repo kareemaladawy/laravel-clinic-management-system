@@ -10,30 +10,17 @@ use Orchid\Screen\TD;
 
 class PatientListLayout extends Table
 {
-    /**
-     * Data source.
-     *
-     * The name of the key to fetch it from the query.
-     * The results of which will be elements of the table.
-     *
-     * @var string
-     */
     protected $target = 'patients';
 
-    /**
-     * Get the table cells to be displayed.
-     *
-     * @return TD[]
-     */
     protected function columns(): array
     {
         return [
-            TD::make('id', 'Id')
+            TD::make('id', 'Id'),
+            TD::make('name', 'Name')
                 ->render(function (Patient $patient) {
-                    return Link::make($patient->id)
+                    return Link::make($patient->name)
                         ->route('platform.system.patient', $patient);
                 }),
-            TD::make('name', 'Name'),
             TD::make('email', 'Email'),
             TD::make('phone_number', 'Phone number'),
             TD::make('created_at', 'Created at')

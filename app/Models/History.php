@@ -13,6 +13,7 @@ class History extends Model
 
     protected $allowedFilters = [
         'properties',
+        'patient'
     ];
 
     protected $allowedSorts = [

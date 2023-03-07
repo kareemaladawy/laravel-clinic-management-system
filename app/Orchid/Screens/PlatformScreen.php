@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens;
 
+use App\Models\Appointment;
+use App\Models\Detection;
+use App\Models\Patient;
 use App\Orchid\Layouts\Examples\ChartBarExample;
 use App\Orchid\Layouts\Examples\ChartLineExample;
 use Orchid\Screen\Actions\Button;
@@ -14,11 +17,6 @@ use Orchid\Support\Facades\Layout;
 
 class PlatformScreen extends Screen
 {
-    /**
-     * Query data.
-     *
-     * @return array
-     */
     public function query(): iterable
     {
         return [
@@ -46,9 +44,9 @@ class PlatformScreen extends Screen
             // ],
 
             'metrics' => [
-                'patients' => ['value' => number_format(83), 'diff' => 2.08],
-                'analysis-pending' => ['value' => number_format(5)],
-                'results' => ['value' => number_format(78), 'diff' => 15.6],
+                'patients' => ['value' => Patient::count()],
+                'detections' => ['value' => Detection::count()],
+                'appointments' => ['value' => Appointment::pending()->count()],
             ],
         ];
     }
@@ -60,7 +58,7 @@ class PlatformScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Hello, ' . auth()->user()->name;
+        return 'Hello, ' . auth()->user()->firstName;
     }
 
     /**
@@ -81,9 +79,13 @@ class PlatformScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-           Link::make('Launch analyzer')
-                ->icon('full-screen')
+           Link::make('Launch detector')
+                ->icon('frame')
                 ->route('platform.system.detector'),
+
+            Link::make('View patients')
+                ->icon('friends')
+                ->route('platform.system.patients'),
         ];
     }
 
@@ -96,9 +98,9 @@ class PlatformScreen extends Screen
     {
         return [
             Layout::metrics([
-                'Patients Today' => 'metrics.patients',
-                'Pending Analysis' => 'metrics.analysis-pending',
-                'Successful Results' => 'metrics.results',
+                'Pending Appointments' => 'metrics.appointments',
+                'Patients' => 'metrics.patients',
+                'Detections' => 'metrics.detections',
             ]),
 
             // Layout::columns([

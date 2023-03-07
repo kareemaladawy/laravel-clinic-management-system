@@ -12,6 +12,8 @@ use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
 use App\Orchid\Screens\Detector\DetectorScreen;
+use App\Orchid\Screens\History\HistoryEditScreen;
+use App\Orchid\Screens\History\HistoryListScreen;
 use App\Orchid\Screens\Patient\PatientEditScreen;
 use App\Orchid\Screens\Patient\PatientListScreen;
 use App\Orchid\Screens\Detection\DetectionListScreen;
@@ -128,6 +130,28 @@ Route::screen('appointments/create/{appointment?}', AppointmentEditScreen::class
             ->parent('platform.system.appointments')
             ->push(__('Create'), route('platform.system.appointment'));
     });
+
+
+
+// histories
+
+// Platform > System > Histories
+Route::screen('histories',HistoryListScreen::class)
+->name('platform.system.histories')
+->breadcrumbs(function (Trail $trail) {
+    return $trail
+        ->parent('platform.index')
+        ->push(__('Histories'), route('platform.system.histories'));
+});
+
+// Platform > System > Histories >History
+Route::screen('histories/create/{history?}',HistoryEditScreen::class)
+->name('platform.system.history')
+->breadcrumbs(function (Trail $trail) {
+    return $trail
+        ->parent('platform.system.histories')
+        ->push(__('Create'), route('platform.system.history'));
+});
 
 
 

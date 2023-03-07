@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Orchid\Screens\Appointment;
+namespace App\Orchid\Screens\History;
 
+use App\Models\History;
+use App\Orchid\Layouts\History\HistoryListLayout;
 use Orchid\Screen\Screen;
-use App\Models\Appointment;
 use Orchid\Screen\Actions\Link;
-use App\Orchid\Layouts\Appointment\AppointmentListLayout;
 
-class AppointmentListScreen extends Screen
+class HistoryListScreen extends Screen
 {
     public function query(): iterable
     {
         return [
-            'appointments' => Appointment::with([
+            'histories' => History::with([
                 'patient' => function($query){
                      $query->select('id', 'name');
                 }
@@ -22,7 +22,7 @@ class AppointmentListScreen extends Screen
 
     public function name(): ?string
     {
-        return 'Appointments';
+        return 'Patient Histories';
     }
 
     public function commandBar(): iterable
@@ -37,7 +37,7 @@ class AppointmentListScreen extends Screen
     public function layout(): iterable
     {
         return [
-            AppointmentListLayout::class
+            HistoryListLayout::class
         ];
     }
 }
