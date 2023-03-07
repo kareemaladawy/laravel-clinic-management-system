@@ -10,31 +10,18 @@ use Orchid\Screen\TD;
 
 class ImageTypeForm extends Rows
 {
-    /**
-     * Data source.
-     *
-     * The name of the key to fetch it from the query.
-     * The results of which will be elements of the table.
-     *
-     * @var string
-     */
     protected $target = '';
 
-    /**
-     * Get the table cells to be displayed.
-     *
-     * @return TD[]
-     */
     protected function fields(): iterable
     {
         return [
             Select::make('image.type')
                 ->options([
-                    'fundus'   => 'Fundus',
-                    'regular' => 'Regular',
+                    'Fundus' => 'Fundus',
+                    'OCT' => 'OCT'
                 ])
-                ->empty('Select uploaded image type (Fundus/Regular)')
-                ->title(__('Image type')),
+                ->required()
+                ->title(__('Choose image type (Fundus - OCT)')),
 
             TextArea::make('image.notes')
                 ->title(__('Notes')),

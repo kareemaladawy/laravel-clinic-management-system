@@ -2,38 +2,23 @@
 
 namespace App\Orchid\Screens\Detector;
 
-use App\Orchid\Layouts\ImageTypeForm;
-use RealRashid\SweetAlert\Facades\Alert;
-use App\Orchid\Layouts\ImageUploadForm;
-use Faker\Core\File;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
-use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Fields\Picture;
-use Orchid\Screen\Fields\Select;
-use Orchid\Screen\Fields\Upload;
+use App\Models\Detection;
 use Orchid\Screen\Screen;
+use Illuminate\Http\Request;
+use Orchid\Screen\Actions\Button;
+use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
+use Illuminate\Support\Facades\Http;
+use App\Orchid\Layouts\ImageTypeForm;
+use App\Orchid\Layouts\ImageUploadForm;
 
 class DetectorScreen extends Screen
 {
-    /**
-     * Query data.
-     *
-     * @return array
-     */
     public function query(): iterable
     {
         return [];
     }
 
-    /**
-     * Display header name.
-     *
-     * @return string|null
-     */
     public function name(): ?string
     {
         return __("Detector");
@@ -46,25 +31,15 @@ class DetectorScreen extends Screen
         ];
     }
 
-    /**
-     * Button commands.
-     *
-     * @return \Orchid\Screen\Action[]
-     */
     public function commandBar(): iterable
     {
         return [
-            Button::make(__('Upload'))
+            Button::make(__('Detect'))
                 ->icon('check')
-                ->method('save'),
+                ->method('detect'),
         ];
     }
 
-    /**
-     * Views.
-     *
-     * @return \Orchid\Screen\Layout[]|string[]
-     */
     public function layout(): iterable
     {
         return [
@@ -78,46 +53,52 @@ class DetectorScreen extends Screen
     /**
      * @throws \JsonException
      */
-    public function save(\Illuminate\Http\Request $request)
+    public function detect(Request $request)
     {
-        // $user = auth()->user();
-        // $user->attachment()->sync(
-        //     $request->input('image.content', [])
-        // );
-        // $imageUrl = $user->attachment()->first()->url ?: null;
+        $user = $request->user();
 
-        // try {
-        // $image = file_get_contents($imageUrl);
+        $user->attachment()->sync(
+            $request->input('image.content', [])
+        );
 
-        // $response = Http::attach('attachment', $image, 'image.jpg')
-        //     ->post("http://164.90.222.190:80/")
-        //     ->throw(function ($response, $e) {
-        //         return "error: " . $e;
-        //     })->json();
+        $imageUrl = $user->attachment()->first()->url ?: null;
 
-        // $response = Http::post()
-        //     ->post("http://164.90.222.190:80/")
-        //     ->throw(function ($response, $e) {
-        //         return "error: " . $e;
-        //     })->json();
+        try {
+            $image = file_get_contents($imageUrl);
+            $response = Http::attach('attachment', $image, 'image.jpg')
+                ->post("http://164.90.222.190:80/")
+                ->throw(function ($response, $e) {
+                    return "error: " . $e;
+                })->json();
 
-        // dd(openssl_get_cert_locations());
-
-        $client = new \GuzzleHttp\Client(['verify' => 'D:\xampp\php\extras\ssl\cacert.pem']);
-
-        $response = $client->request('POST', 'https://api.writesonic.com/v2/business/content/chatsonic?engine=premium', [
-            'body' => '{"enable_google_results":"true","enable_memory":false,"input_text":"what time is it?"}',
-            'headers' => [
-                'X-API-KEY' => config('services.ChatSonic.API_KEY'),
-                'accept' => 'application/json',
-                'content-type' => 'application/json',
-            ],
-        ]);
+            $responseBody = json_decode($response->getBody());
+            $this->saveDetection($responseBody);
+            Alert::success($responseBody->detection);
 
 
-        \Orchid\Support\Facades\Alert::success(json_decode($response->getBody())->message);
-        // } catch (\Exception $e) {
-        //     \Orchid\Support\Facades\Alert::warning('an error occurred. please check ML server conncetion.');
-        // }
+            //chat
+            // dd(openssl_get_cert_locations());
+            // $client = new \GuzzleHttp\Client(['verify' => 'D:\xampp\php\extras\ssl\cacert.pem']);
+            // $response = $client->request('POST', 'https://api.writesonic.com/v2/business/content/chatsonic?engine=premium', [
+            //     'body' => '{"enable_google_results":"true","enable_memory":false,"input_text":"what time is it?"}',
+            //     'headers' => [
+            //         'X-API-KEY' => config('services.ChatSonic.API_KEY'),
+            //         'accept' => 'application/json',
+            //         'content-type' => 'application/json',
+            //     ],
+            // ]);
+            // Alert::success(json_decode($response->getBody())->message);
+        } catch (\Exception $e) {
+            Alert::error('An error occurred. Please check your connection with ML server.');
+        }
+    }
+
+    protected function saveDetection($responseBody)
+    {
+        $detection = new Detection;
+        $detection->disease = $responseBody->disease;
+        $detection->state = $responseBody->state;
+        $detection->type = $responseBody->type;
+        $detection->save();
     }
 }

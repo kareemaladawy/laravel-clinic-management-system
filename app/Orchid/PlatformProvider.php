@@ -33,7 +33,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.main'),
 
             Menu::make(__('Detector'))
-                ->icon('eye')
+                ->icon('frame')
                 ->route('platform.system.detector')
                 ->permission('platform.system.detector')
                 ->title(__('Services')),
@@ -44,64 +44,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->permission('platform.system.patients')
                 ->title(__('Navigation')),
 
+            Menu::make(__('Detections'))
+                ->icon('eye')
+                ->route('platform.system.detections')
+                ->permission('platform.system.detections'),
 
-//            Menu::make('Example screen')
-//                ->icon('monitor')
-//                ->route('platform.example')
-//                ->title('Navigation')
-//                ->badge(function () {
-//                    return 6;
-//                }),
-//
-//            Menu::make('Dropdown menu')
-//                ->icon('code')
-//                ->list([
-//                    Menu::make('Sub element item 1')->icon('bag'),
-//                    Menu::make('Sub element item 2')->icon('heart'),
-//                ]),
-//
-//            Menu::make('Basic Elements')
-//                ->title('Form controls')
-//                ->icon('note')
-//                ->route('platform.example.fields'),
-//
-//            Menu::make('Advanced Elements')
-//                ->icon('briefcase')
-//                ->route('platform.example.advanced'),
-//
-//            Menu::make('Text Editors')
-//                ->icon('list')
-//                ->route('platform.example.editors'),
-//
-//            Menu::make('Overview layouts')
-//                ->title('Layouts')
-//                ->icon('layers')
-//                ->route('platform.example.layouts'),
-//
-//            Menu::make('Chart tools')
-//                ->icon('bar-chart')
-//                ->route('platform.example.charts'),
-//
-//            Menu::make('Cards')
-//                ->icon('grid')
-//                ->route('platform.example.cards')
-//                ->divider(),
-//
-//            Menu::make('Documentation')
-//                ->title('Docs')
-//                ->icon('docs')
-//                ->url('https://orchid.software/en/docs'),
-//
-//            Menu::make('Changelog')
-//                ->icon('shuffle')
-//                ->url('https://github.com/orchidsoftware/platform/blob/master/CHANGELOG.md')
-//                ->target('_blank')
-//                ->badge(function () {
-//                    return Dashboard::version();
-//                }, Color::DARK()),
-//
-
-//
             Menu::make(__('Roles'))
                 ->icon('lock')
                 ->route('platform.system.roles')
@@ -137,6 +84,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.system.patients', __('Patients'))
                 ->addPermission('platform.system.users', __('Users'))
                 ->addPermission('platform.system.detector', __('Detector'))
+                ->addPermission('platform.system.detections', __('Detections'))
         ];
     }
 }
