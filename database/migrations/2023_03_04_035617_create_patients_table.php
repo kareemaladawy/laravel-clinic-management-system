@@ -16,13 +16,17 @@ return new class extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('email')->nullable();
-            $table->string('phone_number')->nullable();
-            $table->date('birthday')->nullable();
-            $table->string('location')->nullable();
+            $table->string('email')
+                ->nullable();
+            $table->string('phone_number')
+                ->nullable();
+            $table->date('birthday')
+                ->nullable();
+            $table->string('location')
+                ->nullable();
             $table->string('gender');
             $table->foreignId('created_by')
-                ->references('id')->on('users');
+                ->constrained('users');
             $table->timestamps();
         });
     }

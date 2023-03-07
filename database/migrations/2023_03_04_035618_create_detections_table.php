@@ -16,13 +16,17 @@ return new class extends Migration
         Schema::create('detections', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
-                ->references('id')->on('users');
+                ->constrained('users');
             $table->foreignUuid('patient_id')
-                ->references('id')->on('patients');
-            $table->string('disease')->nullable();
-            $table->string('state')->nullable();
-            $table->string('type')->nullable();
-            $table->longText('comment')->nullable();
+                ->constrained('patients');
+            $table->string('disease')
+                ->nullable();
+            $table->string('state')
+                ->nullable();
+            $table->string('type')
+                ->nullable();
+            $table->longText('comments')
+                ->nullable();
             $table->timestamps();
         });
 

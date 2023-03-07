@@ -16,14 +16,16 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
-                ->references('id')->on('users');
+                ->constrained('users')
+                ->onDelete('cascade');
             $table->foreignUuid('patient_id')
-                ->references('id')->on('patients')->constrained();
+               ->constrained('patients')
+               ->onDelete('cascade');
             $table->date('date');
             $table->time('time');
             $table->boolean('completed')->default(0);
             $table->longtext('notes')->nullable();
-            $table->json('properties')->nullable();
+            $table->unique(['user_id', 'date', 'time']);
             $table->timestamps();
         });
     }

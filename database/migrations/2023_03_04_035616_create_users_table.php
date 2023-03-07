@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
-            $table->string('phone_number')->nullable();
-            $table->string('specialty')->nullable();
-            $table->string('gender')->nullable();
-            $table->string('remember_token')->nullable();
+            $table->string('phone_number')
+                ->nullable();
+            $table->string('remember_token')
+                ->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('doctors');
+        Schema::dropIfExists('users');
     }
 };

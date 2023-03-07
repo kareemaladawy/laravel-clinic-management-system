@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('treatments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('appointment_id')
-                ->references('id')->on('appointments');
-            $table->longtext('body')->nullable();
+                ->nullable()
+                ->constrained('appointments');
+            $table->longtext('body')
+                ->nullable();
             $table->timestamps();
         });
     }

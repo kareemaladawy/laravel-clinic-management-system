@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('histories', function (Blueprint $table) {
             $table->id();
             $table->foreignUuid('patient_id')
-                ->references('id')->on('patients')->constrained();
-            $table->longText('properties')->nullable();
+                ->constrained('patients');
+            $table->longText('properties')
+                ->nullable();
             $table->timestamps();
         });
     }

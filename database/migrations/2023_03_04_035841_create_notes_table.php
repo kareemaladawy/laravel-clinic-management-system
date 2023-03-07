@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
-                ->references('id')->on('users');
-            $table->uuid('patient_id');
+                ->constrained('users');
+            $table->foreignUuid('patient_id')
+                ->nullable()
+                ->constrained('patients');
             $table->longText('body');
             $table->timestamps();
         });
