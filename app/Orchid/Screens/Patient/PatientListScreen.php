@@ -12,7 +12,7 @@ class PatientListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'patients' => Patient::paginate(10)
+            'patients' => auth()->user()->patients()->paginate(10)
         ];
     }
 

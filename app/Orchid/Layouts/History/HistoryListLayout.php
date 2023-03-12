@@ -8,6 +8,8 @@ use App\Models\History;
 use Illuminate\Support\Str;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Layouts\Table;
+use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\DropDown;
 
 class HistoryListLayout extends Table
 {
@@ -16,11 +18,7 @@ class HistoryListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('id', 'Id')
-                ->render(function (History $history) {
-                    return Link::make($history->id)
-                        ->route('platform.system.history', $history);
-                }),
+            TD::make('id', 'Id'),
             TD::make('patient', 'Patient')
                 ->filter()
                 ->render(function (History $history) {
@@ -30,19 +28,27 @@ class HistoryListLayout extends Table
             TD::make('properties', 'Properties')
                 ->filter()
                 ->render(function (History $history) {
-                    return Link::make(Str::limit($history->properties, 20, '...'))
-                        ->route('platform.system.history', $history);
+                    return $history->properties ? Str::limit($history->properties, 20, '...') : 'Empty';
                 }),
-            TD::make('created_at', 'Created at')
-                ->sort()->filter()
+            TD::make(__('Actions'))
                 ->render(function (History $history) {
-                    return Carbon::parse($history->created_at)->format('g:i A');
-                }),
-            TD::make('updated_at', 'Last edit at')
-                ->sort()->filter()
-                ->render(function (History $history) {
-                    return Carbon::parse($history->updated_at)->format('g:i A');
-                }),
+                    return DropDown::make()
+                        ->icon('options-vertical')
+                        ->list([
+                            Link::make(__('Edit'))
+                                ->route('platform.system.history', $history->id)
+                                ->icon('pencil'),
+
+                            Link::make(__('Show'))
+                                ->route('platform.system.history.show', $history->id)
+                                ->icon('fa.eye'),
+
+                            Button::make(__('Remove'))
+                                ->method('remove', [$history->id])
+                                ->icon('trash'),
+                    ]);
+                }
+            ),
         ];
     }
 }

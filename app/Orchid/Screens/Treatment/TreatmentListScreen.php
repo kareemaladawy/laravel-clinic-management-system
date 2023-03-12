@@ -3,9 +3,10 @@
 namespace App\Orchid\Screens\Treatment;
 
 use App\Models\Treatment;
-use App\Orchid\Layouts\Treatment\TreatmentListLayout;
 use Orchid\Screen\Screen;
 use Orchid\Screen\Actions\Link;
+use Orchid\Support\Facades\Toast;
+use App\Orchid\Layouts\Treatment\TreatmentListLayout;
 
 class TreatmentListScreen extends Screen
 {
@@ -39,5 +40,11 @@ class TreatmentListScreen extends Screen
         return [
             TreatmentListLayout::class
         ];
+    }
+
+    public function remove(Treatment $treatment)
+    {
+        $treatment->delete();
+        Toast::info('Removed.');
     }
 }

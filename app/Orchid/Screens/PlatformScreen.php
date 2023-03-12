@@ -6,12 +6,10 @@ namespace App\Orchid\Screens;
 
 use App\Models\Appointment;
 use App\Models\Detection;
+use App\Models\Note;
 use App\Models\Patient;
-use App\Orchid\Layouts\Examples\ChartBarExample;
-use App\Orchid\Layouts\Examples\ChartLineExample;
-use Orchid\Screen\Actions\Button;
+use App\Models\Treatment;
 use Orchid\Screen\Actions\Link;
-use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 
@@ -47,6 +45,8 @@ class PlatformScreen extends Screen
                 'patients' => ['value' => Patient::count()],
                 'detections' => ['value' => Detection::count()],
                 'appointments' => ['value' => Appointment::pending()->count()],
+                'treatments' => ['value' => Treatment::count()],
+                'notes' => ['value' => Note::count()],
             ],
         ];
     }
@@ -86,6 +86,10 @@ class PlatformScreen extends Screen
             Link::make('View patients')
                 ->icon('friends')
                 ->route('platform.system.patients'),
+
+            Link::make('View notes')
+                ->icon('note')
+                ->route('platform.system.notes'),
         ];
     }
 
@@ -101,6 +105,8 @@ class PlatformScreen extends Screen
                 'Pending Appointments' => 'metrics.appointments',
                 'Patients' => 'metrics.patients',
                 'Detections' => 'metrics.detections',
+                'Treatments' => 'metrics.treatments',
+                'Notes' => 'metrics.notes',
             ]),
 
             // Layout::columns([

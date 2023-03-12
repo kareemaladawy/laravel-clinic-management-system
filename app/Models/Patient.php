@@ -52,6 +52,11 @@ class Patient extends Model
 
     public function doctor()
     {
-        return $this->belongsTo(User::class, 'created_by', 'user_id');
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function detections()
+    {
+        return $this->hasMany(Detection::class);
     }
 }

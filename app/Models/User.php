@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use hasApiTokens, HasFactory, Notifiable, Attachable;
 
-    protected $gurded = [];
+    protected $guarded = [];
 
     protected $allowedFilters = [
         'name',
@@ -45,7 +45,7 @@ class User extends Authenticatable
 
     public function patients()
     {
-        return $this->hasMany(Patient::class, 'created_by', 'user_id');
+        return $this->hasMany(Patient::class, 'created_by', 'id');
     }
 
     public function notes()
@@ -61,6 +61,11 @@ class User extends Authenticatable
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
+    }
+
+    public function detections()
+    {
+        return $this->hasMany(Detection::class);
     }
 
 }

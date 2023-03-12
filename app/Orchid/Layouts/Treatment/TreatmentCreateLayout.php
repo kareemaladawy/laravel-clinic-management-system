@@ -14,6 +14,10 @@ class TreatmentCreateLayout extends Rows
     protected function fields(): iterable
     {
         return [
+            Input::make('treatment.user_id')
+                ->value(auth()->user()->id)
+                ->type('hidden'),
+
             Relation::make('treatment.patient_id')
                 ->fromModel(Patient::class, 'name')
                 ->required()
@@ -22,7 +26,7 @@ class TreatmentCreateLayout extends Rows
             Input::make('treatment.body')
                 ->type('text')
                 ->required()
-                ->title(__('Prescription')),
+                ->title(__('Body')),
         ];
     }
 }

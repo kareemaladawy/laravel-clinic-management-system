@@ -6,6 +6,7 @@ use App\Models\History;
 use Orchid\Screen\Screen;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
+use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Toast;
 use App\Orchid\Layouts\History\HistoryCreateLayout;
 
@@ -48,8 +49,18 @@ class HistoryEditScreen extends Screen
 
     public function save(Request $request, History $history)
     {
-        $history->fill($request->get('history'));
-        $history->save();
+        if ($history->id != null) {
+            $history->update([
+                'properties' => $request->history['properties']
+            ]);
+        } else {
+            if (History::where('patient_id', $request->history['patient_id'])->exists()){
+                Alert::error('Patient already has a history record.');
+                return;
+            }
+            $history->fill($request->get('history'));
+            $history->save();
+        }
         Toast::info('Saved.');
         return redirect()->route('platform.system.histories');
     }

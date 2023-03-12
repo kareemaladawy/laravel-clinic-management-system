@@ -19,7 +19,7 @@ class PatientCreateLayout extends Rows
     {
         return [
             Input::make('patient.created_by')
-                ->value(auth()->user()->id)
+                ->value(auth()->id())
                 ->type('hidden'),
 
             Input::make('patient.name')

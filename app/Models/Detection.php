@@ -12,17 +12,29 @@ class Detection extends Model
 
     protected $guarded = [];
 
+    protected $touches = ['patient'];
+
     protected $allowedFilters = [
         'patient_id',
         'doctor_id',
         'disease',
         'state',
         'type',
-        'comment'
+        'comments'
     ];
 
     protected $allowedSorts = [
         'created_at',
         'updated_at'
     ];
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

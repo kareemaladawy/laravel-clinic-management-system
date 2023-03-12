@@ -6,6 +6,7 @@ use App\Models\History;
 use App\Orchid\Layouts\History\HistoryListLayout;
 use Orchid\Screen\Screen;
 use Orchid\Screen\Actions\Link;
+use Orchid\Support\Facades\Toast;
 
 class HistoryListScreen extends Screen
 {
@@ -39,5 +40,11 @@ class HistoryListScreen extends Screen
         return [
             HistoryListLayout::class
         ];
+    }
+
+    public function remove(History $history)
+    {
+        $history->delete();
+        Toast::info('Removed.');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Orchid\Screens\Appointment;
 use Orchid\Screen\Screen;
 use App\Models\Appointment;
 use Orchid\Screen\Actions\Link;
+use Orchid\Support\Facades\Toast;
 use App\Orchid\Layouts\Appointment\AppointmentListLayout;
 
 class AppointmentListScreen extends Screen
@@ -39,5 +40,11 @@ class AppointmentListScreen extends Screen
         return [
             AppointmentListLayout::class
         ];
+    }
+
+    public function complete(Appointment $appointment)
+    {
+        $appointment->update(['completed' => 1]);
+        Toast::success(__('Updated.'));
     }
 }

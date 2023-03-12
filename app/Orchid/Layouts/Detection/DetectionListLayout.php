@@ -7,6 +7,8 @@ use Orchid\Screen\TD;
 use App\Models\Detection;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Layouts\Table;
+use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\DropDown;
 
 class DetectionListLayout extends Table
 {
@@ -26,18 +28,23 @@ class DetectionListLayout extends Table
                         ->route('platform.system.patient', $detection->patient_id);
                 }),
             TD::make('disease', 'Disease'),
-            TD::make('state', 'State'),
-            TD::make('type', 'Type'),
-            TD::make('comment', 'Comment'),
-            TD::make('created_at', 'Created at')
+            TD::make('created_at', 'Date of detection')
                 ->sort()->filter()
                 ->render(function (Detection $detection) {
                     return Carbon::parse($detection->created_at)->format('g:i A');
                 }),
-            TD::make('updated_at', 'Last update at')->sort()->filter()
+            TD::make(__('Actions'))
                 ->render(function (Detection $detection) {
-                    return Carbon::parse($detection->updated_at)->format('g:i A');
-                }),
+                    return DropDown::make()
+                        ->icon('options-vertical')
+                        ->list([
+                            Link::make(__('Edit'))
+                                ->route('platform.system.detection', $detection->id)
+                                ->icon('pencil')
+                                ->canSee($detection->user_id == auth()->id()),
+                    ]);
+                }
+            ),
         ];
     }
 }

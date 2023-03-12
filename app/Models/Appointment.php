@@ -12,6 +12,8 @@ class Appointment extends Model
 
     protected $guarded = [];
 
+    protected $touches = ['patient'];
+
     protected $allowedFilters = [
         'date',
         'time',

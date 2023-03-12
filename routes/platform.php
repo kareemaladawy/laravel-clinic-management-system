@@ -3,6 +3,10 @@
 declare(strict_types=1);
 
 use App\Models\Detection;
+use App\Models\History;
+use App\Models\Note;
+use App\Models\Patient;
+use App\Models\Treatment;
 use Tabuna\Breadcrumbs\Trail;
 use Illuminate\Support\Facades\Route;
 use App\Orchid\Screens\PlatformScreen;
@@ -19,10 +23,14 @@ use App\Orchid\Screens\Patient\PatientListScreen;
 use App\Orchid\Screens\Detection\DetectionListScreen;
 use App\Orchid\Screens\Appointment\AppointmentEditScreen;
 use App\Orchid\Screens\Appointment\AppointmentListScreen;
+use App\Orchid\Screens\History\HistoryShowScreen;
 use App\Orchid\Screens\Note\NoteEditScreen;
 use App\Orchid\Screens\Note\NoteListScreen;
+use App\Orchid\Screens\Note\NoteShowScreen;
+use App\Orchid\Screens\Patient\PatientShowScreen;
 use App\Orchid\Screens\Treatment\TreatmentEditScreen;
 use App\Orchid\Screens\Treatment\TreatmentListScreen;
+use App\Orchid\Screens\Treatment\TreatmentShowScreen;
 
 // Main
 Route::screen('/main', PlatformScreen::class)
@@ -90,6 +98,15 @@ Route::screen('patients/create/{patient?}', PatientEditScreen::class)
             ->push(__('Create'), route('platform.system.patient'));
     });
 
+// Platform > System > Patients > Show
+Route::screen('patients/{patient}/show', PatientShowScreen::class)
+    ->name('platform.system.patient.show')
+    ->breadcrumbs(function (Trail $trail, Patient $patient) {
+        return $trail
+            ->parent('platform.system.patients')
+            ->push(__('Show'), route('platform.system.patient.show', $patient));
+    });
+
 
 
 // Detections
@@ -103,7 +120,7 @@ Route::screen('detections', DetectionListScreen::class)
         ->push(__('Detections'), route('platform.system.detections'));
 });
 
-// Platform > System > Patients > Patient
+// Platform > System > Detections > Detection
 Route::screen('detections/edit/{detection}', DetectionListScreen::class)
 ->name('platform.system.detection')
 ->breadcrumbs(function (Trail $trail, Detection $detection) {
@@ -156,6 +173,15 @@ Route::screen('histories/create/{history?}',HistoryEditScreen::class)
         ->push(__('Create'), route('platform.system.history'));
 });
 
+// Platform > System > Histories > Show
+Route::screen('histories/{history}/show', HistoryShowScreen::class)
+    ->name('platform.system.history.show')
+    ->breadcrumbs(function (Trail $trail, History $history) {
+        return $trail
+            ->parent('platform.system.histories')
+            ->push(__('Show'), route('platform.system.history.show', $history));
+    });
+
 
 
 // Treatments
@@ -178,6 +204,15 @@ Route::screen('treatments/create/{treatment?}', TreatmentEditScreen::class)
         ->push(__('Create'), route('platform.system.treatment'));
 });
 
+// Platform > System > Treatments > Show
+Route::screen('treatments/{treatment}/show', TreatmentShowScreen::class)
+    ->name('platform.system.treatment.show')
+    ->breadcrumbs(function (Trail $trail, Treatment $treatment) {
+        return $trail
+            ->parent('platform.system.treatments')
+            ->push(__('Show'), route('platform.system.treatment.show', $treatment));
+    });
+
 
 
 // Notes
@@ -199,6 +234,16 @@ Route::screen('notes/create/{note?}', NoteEditScreen::class)
         ->parent('platform.system.notes')
         ->push(__('Create'), route('platform.system.note'));
 });
+
+// Platform > System > Notes > Show
+Route::screen('notes/{note}/show', NoteShowScreen::class)
+    ->name('platform.system.note.show')
+    ->breadcrumbs(function (Trail $trail, Note $note) {
+        return $trail
+            ->parent('platform.system.notes')
+            ->push(__('Show'), route('platform.system.note.show', $note));
+    });
+
 
 
 // Roles
