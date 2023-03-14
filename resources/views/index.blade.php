@@ -44,8 +44,8 @@
 
             <nav id="navbar" class="navbar">
                 <ul>
+                    <li><a class="nav-link scrollto" href="/admin">Dashboard</a></li>
                     <li><a class="nav-link scrollto" href="/register">Register</a></li>
-                    <li><a class="nav-link scrollto" href="/admin">Your Dashboard</a></li>
                     {{-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
@@ -77,7 +77,7 @@
             <div class="row justify-content-between">
                 <div class="col-lg-7 pt-5 pt-lg-0 order-2 order-lg-1 d-flex align-items-center">
                     <div data-aos="zoom-out">
-                        <h1>Automate Detections With <span>Roaya's AI</span></h1>
+                        <h1>Automate Detections & Manage Your Clinic With <span>Roaya's AI</span></h1>
                         <h2>We are team of talented developers making doctors lives easier</h2>
                         <div class="text-center text-lg-start">
                             <a href="/register" class="btn-get-started scrollto">Get Started</a>
