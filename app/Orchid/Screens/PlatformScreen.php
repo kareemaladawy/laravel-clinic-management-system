@@ -4,49 +4,45 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens;
 
-use App\Models\Appointment;
-use App\Models\Detection;
-use App\Models\Note;
-use App\Models\Patient;
-use App\Models\Treatment;
-use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
+use Orchid\Screen\Actions\Link;
 use Orchid\Support\Facades\Layout;
+use App\Orchid\Layouts\Examples\ChartLineExample;
 
 class PlatformScreen extends Screen
 {
     public function query(): iterable
     {
         return [
-            // 'charts'  => [
-            //     [
-            //         'name'   => 'Confirmed',
-            //         'values' => [70, 70, 80, 90, 100, 100, 100],
-            //         'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
-            //     ],
-            //     [
-            //         'name'   => 'Labeled',
-            //         'values' => [25, 50, 60, 70, 80, 90, 100],
-            //         'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
-            //     ],
-            //     [
-            //         'name'   => 'Successful',
-            //         'values' => [15, 20, 25, 30, 35, 40, 50],
-            //         'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
-            //     ],
-            //     [
-            //         'name'   => 'Pending Approval',
-            //         'values' => [10, 10, 10, 10, 50, 20, 10],
-            //         'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
-            //     ],
-            // ],
+            'charts'  => [
+                [
+                    'name'   => 'Confirmed',
+                    'values' => [70, 70, 80, 90, 100, 100, 100],
+                    'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
+                ],
+                [
+                    'name'   => 'Labeled',
+                    'values' => [25, 50, 60, 70, 80, 90, 100],
+                    'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
+                ],
+                [
+                    'name'   => 'Successful',
+                    'values' => [15, 20, 25, 30, 35, 40, 50],
+                    'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
+                ],
+                [
+                    'name'   => 'Pending Approval',
+                    'values' => [10, 10, 10, 10, 50, 20, 10],
+                    'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
+                ],
+            ],
 
             'metrics' => [
-                'patients' => ['value' => Patient::count()],
-                'detections' => ['value' => Detection::count()],
-                'appointments' => ['value' => Appointment::pending()->count()],
-                'treatments' => ['value' => Treatment::count()],
-                'notes' => ['value' => Note::count()],
+                'patients' => ['value' => auth()->user()->patients()->count()],
+                'detections' => ['value' => auth()->user()->detections()->count()],
+                'appointments' => ['value' => auth()->user()->appointments()->count()],
+                'treatments' => ['value' => auth()->user()->treatments()->count()],
+                'notes' => ['value' => auth()->user()->notes()->count()],
             ],
         ];
     }
@@ -109,10 +105,10 @@ class PlatformScreen extends Screen
                 'Notes' => 'metrics.notes',
             ]),
 
-            // Layout::columns([
-            //     ChartLineExample::make('charts', 'Results')
-            //         ->description('Showing results over the 30 last days'),
-            // ]),
+            Layout::columns([
+                ChartLineExample::make('charts', 'Results')
+                    ->description('Showing results over the 30 last days'),
+            ]),
         ];
     }
 }
