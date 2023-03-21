@@ -26,6 +26,12 @@ class Patient extends Model
         'created_at'
     ];
 
+    protected $dates = [
+        'updated_at',
+        'created_at',
+        'last_viewed_at'
+    ];
+
     public function getHistoryAttribute(): string
     {
         return $this->history->properties;

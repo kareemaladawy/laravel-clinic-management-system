@@ -15,14 +15,15 @@ class PatientSeeder extends Seeder
      */
     public function run()
     {
+        Patient::factory(10)->create();
         Patient::create([
             'name' => 'jjjj',
             'email' => 'jjjj@h.com',
             'phone_number' => '0000',
             'gender' => 'male',
-            'birthday' => '03-02-2025',
+            'birthday' => '2005-02-04',
             'location' => 'caioop',
-            'created_by' => 1
+            'created_by' => 7
         ]);
     }
 }
