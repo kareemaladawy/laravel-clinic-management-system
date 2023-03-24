@@ -2,58 +2,51 @@
 
 namespace App\Http\Controllers\API\User;
 
+use App\Models\Treatment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTreatmentRequest;
-use App\Http\Resources\TreatmentResource;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 
 class TreatmentController extends Controller
 {
     public function index()
     {
         $treatments = auth()->user()->treatments()->get();
-        return response()->success([
-            'treatments' => TreatmentResource::collection($treatments)
-        ], 'success.', 200);
+        return response()->json([
+            'treatments' => $treatments
+        ], 200);
     }
 
-    public function show(int $id)
+    public function store(Request $request)
     {
-        try {
-            $treatment = auth()->user()->treatments()->findOrFail($id);
-        } catch (ModelNotFoundException){
-            return response()->info('not found.', 404);
-        }
-        return response()->success(['treatment' => TreatmentResource::make($treatment)], 'success.', 200);
+        $treatment=auth()->user()->treatments()->create([
+            'body'=>$request->body,
+            'patient_id'=>$request->patient_id
+        ]);
+
+        return response()->json([
+            'message' => 'treatment added successfully',
+        ],200);
     }
 
-    public function store(StoreTreatmentRequest $request)
+    public function update(Request $request, Treatment $treatment)
     {
-        $treatment = auth()->user()->treatments()->create($request->validated());
-        return response()->success(['treatment' => TreatmentResource::make($treatment)], 'created.', 201);
+        $treatment=auth()->user()->treatments()->find($treatment->id)->update([
+            'body'=>$request->body
+
+        ]);
+
+        return response()->json([
+            'message' => 'treatment updated successfully',
+        ],200);
     }
 
-    public function update(Request $request, int $id)
+    public function distroy(Treatment $treatment)
     {
-        try {
-            $treatment = auth()->user()->treatments()->findOrFail($id);
-            $treatment->update([
-                'body' => $request->body
-            ]);
-        } catch (ModelNotFoundException){
-            return response()->info('not found.', 404);
-        }
-        return response()->success(['treatment' => TreatmentResource::make($treatment)], 'updated.', 200);
-    }
+        $treatment=auth()->user()->treatments()->find($treatment->id)->delete();
 
-    public function destroy(int $id)
-    {
-        try {
-            $treatment = auth()->user()->treatments()->findOrFail($id)->delete();
-        } catch (ModelNotFoundException) {
-            return response()->info('not found.', 404);
-        }
-        return response()->info('removed.', 200);
+        return response()->json([
+            'message' => 'treatment deleted successfully',
+        ],200);
     }
 }

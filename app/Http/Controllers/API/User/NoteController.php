@@ -5,44 +5,47 @@ namespace App\Http\Controllers\API\User;
 use App\Models\Note;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\NoteResource;
-use App\Http\Requests\StoreNoteRequest;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class NoteController extends Controller
 {
     public function index()
     {
-        $notes = auth()->user()->notes()->get();
-        return response()->success(['notes' => NoteResource::collection($notes)], 'success.', 200);
+        $notes= auth()->user()->notes()->get();
+        return response()->json([
+            'notes' => $notes
+        ], 200);
     }
 
-    public function store(StoreNoteRequest $request)
+    public function store(Request $request)
     {
-        $note = auth()->user()->notes()->create($request->validated());
-        return response()->success(['note' => NoteResource::make($note)], 'created.', 201);
+        $treatment=auth()->user()->notes()->create([
+            'body'=>$request->body,
+            'patient_id'=>$request->patient_id
+        ]);
+
+        return response()->json([
+            'message' => 'note added successfully',
+        ],200);
     }
 
-    public function update(Request $request, int $id)
+    public function update(Request $request, Note $note)
     {
-        try {
-            $note = auth()->user()->notes()->findOrFail($id);
-            $note->update([
-                'body' => $request->body
-            ]);
-        } catch (ModelNotFoundException){
-            return response()->info('not found.', 404);
-        }
-        return response()->success(['note' => NoteResource::make($note)], 'updated.', 200);
+        $note=auth()->user()->notes()->find($note->id)->update([
+            'body'=>$request->body
+
+        ]);
+
+        return response()->json([
+            'message' => 'note updated successfully',
+        ],200);
     }
 
-    public function destroy(int $id)
+    public function distroy(Note $note)
     {
-        try {
-            $note = auth()->user()->notes()->findOrFail($id)->delete();
-        } catch (ModelNotFoundException) {
-            return response()->info('not found.', 404);
-        }
-        return response()->info('removed.', 200);
+        $note=auth()->user()->notes()->find($note->id)->delete();
+
+        return response()->json([
+            'message' => 'note deleted successfully',
+        ],200);
     }
 }
