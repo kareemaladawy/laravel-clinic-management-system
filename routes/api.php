@@ -22,9 +22,12 @@ Route::name('doctor.')->group(function() {
         Route::apiResource('patients', PatientController::class)->only(['index', 'show']);
         // appointments
         Route::apiResource('appointments', AppointmentController::class)->only(['index', 'show']);
+        Route::get('appointments/{appointment}/complete', [AppointmentController::class, 'complete'])
+            ->name('appointment.complete');
         // treatments
         Route::apiResource('treatments', TreatmentController::class);
-
+        // notes
+        Route::apiResource('notes', NoteController::class);
     });
 });
 
@@ -36,32 +39,3 @@ Route::name('doctor.')->group(function() {
 
 // // Route ::post('detection/{detection}/update', [DetectionController::class, 'update'])
 // // ->name('detection.update');
-
-//------------------------Treatment---------------------
-
-// Route::get('treatments', [TreatmentController::class, 'index'])
-// ->name('treatments.read');
-
-// Route ::post('treatments', [TreatmentController::class, 'store'])
-// ->name('treatment.store');
-
-// Route ::post('treatments/{treatment}', [TreatmentController::class, 'update'])
-// ->name('treatment.update');
-
-// Route ::delete('treatments/{treatment}', [TreatmentController::class, 'distroy'])
-// ->name('treatment.delete');
-
-
-//-------------------------Notes-------------------------
-
-// Route::get('notes', [NoteController::class, 'index'])
-// ->name('notes.read');
-
-// Route ::post('notes', [NoteController::class, 'store'])
-// ->name('note.store');
-
-// Route ::post('notes/{note}', [NoteController::class, 'update'])
-// ->name('note.update');
-
-// Route ::delete('notes/{note}', [NoteController::class, 'distroy'])
-// ->name('note.delete');

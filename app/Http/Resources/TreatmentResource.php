@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AppointmentResource extends JsonResource
+class TreatmentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +16,11 @@ class AppointmentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'patient' => $this->patient->name,
-            'date' => $this->date,
-            'time' => Carbon::parse($this->time)->format('g:i A')
+            'patient_id' => $this->patient_id,
+            'patient_name' => $this->patient->name,
+            'body' => $this->body,
+            'created_at' => $this->created_at->diffForHumans(),
+            'updated_at' => $this->updated_at->diffForHumans(),
         ];
     }
 }
