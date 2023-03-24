@@ -16,13 +16,10 @@ return new class extends Migration
         Schema::create('treatments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
-                ->nullable()
                 ->constrained('users');
             $table->foreignUuid('patient_id')
-                ->nullable()
                 ->constrained('patients');
-            $table->longtext('body')
-                ->nullable();
+            $table->longtext('body');
             $table->timestamps();
         });
     }

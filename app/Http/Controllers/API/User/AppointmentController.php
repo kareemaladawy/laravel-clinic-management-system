@@ -15,4 +15,12 @@ class AppointmentController extends Controller
             'coming_appointments' => AppointmentResource::collection($coming_appointments)
             ],'success.', 200);
     }
+
+    public function complete(Appointment $appointment)
+    {
+        $appointment->completed = 1;
+        $appointment->save();
+
+        return response()->info('updated.', 200);
+    }
 }
