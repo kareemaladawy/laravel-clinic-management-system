@@ -13,11 +13,7 @@ class AppointmentListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'appointments' => Appointment::with([
-                'patient' => function($query){
-                     $query->select('id', 'name');
-                }
-            ])->paginate(10)
+            'appointments' => auth()->user()->appointments()->paginate(10)
         ];
     }
 

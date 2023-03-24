@@ -13,11 +13,7 @@ class HistoryListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'histories' => History::with([
-                'patient' => function($query){
-                     $query->select('id', 'name');
-                }
-            ])->paginate(10)
+            'histories' => auth()->user()->histories()->get()
         ];
     }
 

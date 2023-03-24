@@ -48,6 +48,11 @@ class User extends Authenticatable
         return $this->hasMany(Patient::class, 'created_by', 'id');
     }
 
+    public function histories()
+    {
+        return $this->hasManyThrough(History::class, Patient::class, 'created_by', 'patient_id', 'id', 'id');
+    }
+
     public function notes()
     {
         return $this->hasMany(Note::class);

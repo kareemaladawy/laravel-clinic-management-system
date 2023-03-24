@@ -13,11 +13,7 @@ class TreatmentListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'treatments' => Treatment::with([
-                'patient' => function ($query){
-                    $query->select('id','name');
-                }
-            ])->paginate(10)
+            'treatments' => auth()->user()->treatments()->paginate(10)
         ];
     }
 

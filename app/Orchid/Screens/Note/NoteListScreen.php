@@ -12,11 +12,7 @@ class NoteListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'notes' => Note::with([
-                'patient' => function($query){
-                    $query->select('id', 'name');
-                }
-            ])->paginate(10)
+            'notes' => auth()->user()->notes()->paginate(10)
         ];
     }
 
