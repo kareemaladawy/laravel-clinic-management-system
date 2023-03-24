@@ -50,7 +50,7 @@ class AuthController extends Controller
             $token = auth()->user()->createToken('Token of ' . auth()->user()->name)->plainTextToken;
             return response()->success(['user' => auth()->user(), 'token' => $token], 'logged in.', 200);
         }
-        return response()->error('invalid credentials.', 401);
+        return response()->info('invalid credentials.', 401);
    }
 
    public function logout(Request $request)
