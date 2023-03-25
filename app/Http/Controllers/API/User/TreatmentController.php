@@ -18,42 +18,42 @@ class TreatmentController extends Controller
         ], 'success.', 200);
     }
 
-    public function show(int $id)
-    {
-        try {
-            $treatment = auth()->user()->treatments()->findOrFail($id);
-        } catch (ModelNotFoundException){
-            return response()->info('not found.', 404);
-        }
-        return response()->success(['treatment' => TreatmentResource::make($treatment)], 'success.', 200);
-    }
+    // public function show(int $id)
+    // {
+    //     try {
+    //         $treatment = auth()->user()->treatments()->findOrFail($id);
+    //     } catch (ModelNotFoundException){
+    //         return response()->info('not found.', 404);
+    //     }
+    //     return response()->success(['treatment' => TreatmentResource::make($treatment)], 'success.', 200);
+    // }
 
-    public function store(StoreTreatmentRequest $request)
-    {
-        $treatment = auth()->user()->treatments()->create($request->validated());
-        return response()->success(['treatment' => TreatmentResource::make($treatment)], 'created.', 201);
-    }
+    // public function store(StoreTreatmentRequest $request)
+    // {
+    //     $treatment = auth()->user()->treatments()->create($request->validated());
+    //     return response()->success(['treatment' => TreatmentResource::make($treatment)], 'created.', 201);
+    // }
 
-    public function update(Request $request, int $id)
-    {
-        try {
-            $treatment = auth()->user()->treatments()->findOrFail($id);
-            $treatment->update([
-                'body' => $request->body
-            ]);
-        } catch (ModelNotFoundException){
-            return response()->info('not found.', 404);
-        }
-        return response()->success(['treatment' => TreatmentResource::make($treatment)], 'updated.', 200);
-    }
+    // public function update(Request $request, int $id)
+    // {
+    //     try {
+    //         $treatment = auth()->user()->treatments()->findOrFail($id);
+    //         $treatment->update([
+    //             'body' => $request->body
+    //         ]);
+    //     } catch (ModelNotFoundException){
+    //         return response()->info('not found.', 404);
+    //     }
+    //     return response()->success(['treatment' => TreatmentResource::make($treatment)], 'updated.', 200);
+    // }
 
-    public function destroy(int $id)
-    {
-        try {
-            $treatment = auth()->user()->treatments()->findOrFail($id)->delete();
-        } catch (ModelNotFoundException) {
-            return response()->info('not found.', 404);
-        }
-        return response()->info('removed.', 200);
-    }
+    // public function destroy(int $id)
+    // {
+    //     try {
+    //         $treatment = auth()->user()->treatments()->findOrFail($id)->delete();
+    //     } catch (ModelNotFoundException) {
+    //         return response()->info('not found.', 404);
+    //     }
+    //     return response()->info('removed.', 200);
+    // }
 }

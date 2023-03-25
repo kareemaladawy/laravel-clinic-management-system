@@ -19,7 +19,8 @@ class AppointmentResource extends JsonResource
             'id' => $this->id,
             'patient' => $this->patient->name,
             'date' => $this->date,
-            'time' => Carbon::parse($this->time)->format('g:i A')
+            'time' => Carbon::parse($this->time)->format('g:i A'),
+            'completed' => $this->completed
         ];
     }
 }

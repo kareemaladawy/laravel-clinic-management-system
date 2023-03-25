@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Orchid\Screen\AsSource;
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -33,6 +34,11 @@ class Appointment extends Model
     public function scopePending($query)
     {
         return $query->where('completed', 0);
+    }
+
+    public function scopeUpcoming($query)
+    {
+        return $query->whereDate('date', '>=', Carbon::now()->toDateString());
     }
 
     public function user()

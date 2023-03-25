@@ -20,12 +20,11 @@ Route::name('doctor.')->group(function() {
         Route::post('/logout', [AuthController::class,'logout'])->name('logout');
         // patients
         Route::apiResource('patients', PatientController::class)->only(['index', 'show']);
-        // appointments
-        Route::apiResource('appointments', AppointmentController::class)->only(['index', 'show']);
-        Route::get('appointments/{appointment}/complete', [AppointmentController::class, 'complete'])
-            ->name('appointment.complete');
         // treatments
-        Route::apiResource('treatments', TreatmentController::class);
+        Route::get('treatments', [TreatmentController::class, 'index'])->name('treatments');
+        // appointments
+        Route::apiResource('appointments', AppointmentController::class)->except('show');
+        Route::get('appointments/upcoming', [AppointmentController::class, 'upcoming']);
         // notes
         Route::apiResource('notes', NoteController::class);
     });

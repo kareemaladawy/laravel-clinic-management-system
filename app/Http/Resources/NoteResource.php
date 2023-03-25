@@ -16,8 +16,8 @@ class NoteResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'patient_id' => $this->whenNotNull($this->patient_id),
-            'patient_name' => $this->whenNotNull($this->patient?->name),
+            'title' => $this->title,
+            'patient' => $this->whenNotNull($this->patient?->name),
             'body' => $this->body,
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at->diffForHumans(),
