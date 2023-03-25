@@ -24,7 +24,7 @@ class PatientResource extends JsonResource
             'birthday' => $this->whenNotNull($this->birthday),
             'location' => $this->whenNotNull($this->location),
             'created_at' => $this->whenNotNull($this->created_at->diffForHumans()),
-            'last_viewed_at' => $this->whenNotNull($last_viewed_at),
+            // 'last_viewed_at' => $this->whenNotNull($last_viewed_at),
             'history' => $history->isEmpty() ? 'no history yet' : $history[0]->properties
         ];
     }
