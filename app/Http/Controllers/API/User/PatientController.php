@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\User;
 use Exception;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PatientResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PatientController extends Controller
 {
@@ -20,9 +21,9 @@ class PatientController extends Controller
     {
         try {
             $patient = auth()->user()->patients()->findOrFail($id);
-            $patient->last_viewed_at = now();
-            $patient->save();
-        } catch (Exception $e) {
+            // $patient->last_viewed_at = now();
+            // $patient->save();
+        } catch (ModelNotFoundException) {
             return response()->error('not found.', 404);
         }
         return response()->success(['patient' => PatientResource::make($patient)], 'success.', 200);
