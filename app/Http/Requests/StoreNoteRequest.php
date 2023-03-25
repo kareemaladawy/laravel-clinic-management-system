@@ -24,7 +24,8 @@ class StoreNoteRequest extends FormRequest
     public function rules()
     {
         return [
-            'patient_id' => 'uuid',
+            'title' => 'required|string|min:2|max:255',
+            'patient_id' => 'uuid|exists:patients,id',
             'body' => 'required|string'
         ];
     }

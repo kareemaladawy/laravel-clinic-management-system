@@ -17,6 +17,16 @@ class NoteController extends Controller
         return response()->success(['notes' => NoteResource::collection($notes)], 'success.', 200);
     }
 
+    public function show(int $id)
+    {
+        try {
+            $note = auth()->user()->notes()->findOrFail($id);
+        } catch (ModelNotFoundException){
+            return response()->info('not found.', 404);
+        }
+        return response()->success(['note' => NoteResource::make($note)], 'success.', 200);
+    }
+
     public function store(StoreNoteRequest $request)
     {
         $note = auth()->user()->notes()->create($request->validated());

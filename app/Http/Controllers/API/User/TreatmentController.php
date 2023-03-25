@@ -18,15 +18,15 @@ class TreatmentController extends Controller
         ], 'success.', 200);
     }
 
-    // public function show(int $id)
-    // {
-    //     try {
-    //         $treatment = auth()->user()->treatments()->findOrFail($id);
-    //     } catch (ModelNotFoundException){
-    //         return response()->info('not found.', 404);
-    //     }
-    //     return response()->success(['treatment' => TreatmentResource::make($treatment)], 'success.', 200);
-    // }
+    public function show(int $id)
+    {
+        try {
+            $treatment = auth()->user()->treatments()->findOrFail($id);
+        } catch (ModelNotFoundException){
+            return response()->info('not found.', 404);
+        }
+        return response()->success(['treatment' => TreatmentResource::make($treatment)], 'success.', 200);
+    }
 
     // public function store(StoreTreatmentRequest $request)
     // {

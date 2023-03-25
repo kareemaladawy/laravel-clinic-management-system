@@ -21,7 +21,7 @@ Route::name('doctor.')->group(function() {
         // patients
         Route::apiResource('patients', PatientController::class)->only(['index', 'show']);
         // treatments
-        Route::get('treatments', [TreatmentController::class, 'index'])->name('treatments');
+        Route::apiResource('treatments', TreatmentController::class)->only(['index', 'show']);
         // appointments
         Route::apiResource('appointments', AppointmentController::class)->except('show');
         Route::get('appointments/upcoming', [AppointmentController::class, 'upcoming']);
