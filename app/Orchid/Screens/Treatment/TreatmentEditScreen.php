@@ -49,7 +49,7 @@ class TreatmentEditScreen extends Screen
     public function save(Request $request, Treatment $treatment)
     {
         $treatment->fill($request->get('treatment'));
-        $treatment->save();
+        $request->user()->treatments()->save($treatment);
         Toast::info('Saved.');
         return redirect()->route('platform.system.treatments');
     }

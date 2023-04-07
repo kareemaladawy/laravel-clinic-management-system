@@ -5,6 +5,7 @@ namespace App\Orchid\Layouts\Treatment;
 use App\Models\Patient;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Rows;
+use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\Relation;
 
 class TreatmentCreateLayout extends Rows
@@ -18,9 +19,10 @@ class TreatmentCreateLayout extends Rows
                 ->value(auth()->user()->id)
                 ->type('hidden'),
 
-            Relation::make('treatment.patient_id')
-                ->fromModel(Patient::class, 'name')
+            Select::make('treatment.patient_id')
+                ->fromQuery(Patient::where('created_by', auth()->id()), 'name')
                 ->required()
+                ->empty()
                 ->title('Choose patient'),
 
             Input::make('treatment.body')

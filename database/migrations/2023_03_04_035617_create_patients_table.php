@@ -26,7 +26,8 @@ return new class extends Migration
                 ->nullable();
             $table->string('gender');
             $table->foreignId('created_by')
-                ->constrained('users');
+                ->constrained('users')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -23,8 +23,10 @@ class NoteListLayout extends Table
                 ->filter()
                 ->render(function (Note $note) {
                     return $note->patient ? Link::make($note->patient->name)
-                        ->route('platform.system.patient', $note->patient_id) : '"not associated with a patient"';
+                        ->route('platform.system.patient', $note->patient_id) : '';
                 }),
+            TD::make('title', 'Title')
+                ->filter(),
             TD::make('body', 'Body')
                 ->filter()
                 ->render(function (Note $note) {

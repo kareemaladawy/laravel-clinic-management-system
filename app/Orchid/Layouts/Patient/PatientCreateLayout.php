@@ -18,9 +18,9 @@ class PatientCreateLayout extends Rows
     protected function fields(): iterable
     {
         return [
-            Input::make('patient.created_by')
-                ->value(auth()->id())
-                ->type('hidden'),
+            // Input::make('patient.created_by')
+            //     ->value(auth()->id())
+            //     ->type('hidden'),
 
             Input::make('patient.name')
                 ->type('text')

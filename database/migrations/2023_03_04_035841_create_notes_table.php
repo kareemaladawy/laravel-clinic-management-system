@@ -16,10 +16,12 @@ return new class extends Migration
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
-                ->constrained('users');
+                ->constrained('users')
+                ->onDelete('cascade');
             $table->foreignUuid('patient_id')
                 ->nullable()
-                ->constrained('patients');
+                ->constrained('patients')
+                ->onDelete('cascade');
             $table->longText('body');
             $table->timestamps();
         });

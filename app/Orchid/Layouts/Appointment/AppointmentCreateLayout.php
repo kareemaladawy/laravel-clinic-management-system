@@ -4,10 +4,8 @@ namespace App\Orchid\Layouts\Appointment;
 
 use App\Models\Patient;
 use Orchid\Screen\Fields\CheckBox;
-use Orchid\Screen\TD;
 use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\Relation;
-use Orchid\Screen\Fields\Switcher;
+use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Rows;
 
 class AppointmentCreateLayout extends Rows
@@ -17,9 +15,10 @@ class AppointmentCreateLayout extends Rows
     protected function fields(): iterable
     {
         return [
-            Relation::make('appointment.patient_id')
-                ->fromModel(Patient::class, 'name')
+            Select::make('appointment.patient_id')
+                ->fromQuery(Patient::where('created_by', auth()->id()), 'name')
                 ->required()
+                ->empty()
                 ->title('Choose patient'),
 
             Input::make('appointment.date')

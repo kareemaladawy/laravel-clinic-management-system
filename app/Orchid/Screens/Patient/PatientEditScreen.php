@@ -53,13 +53,14 @@ class PatientEditScreen extends Screen
     public function save(Request $request, Patient $patient)
     {
         $patient->fill($request->get('patient'));
-        $patient->save();
+        $request->user()->patients()->save($patient);
         Toast::info('Saved.');
         return redirect()->route('platform.system.patients');
     }
 
     public function remove(Patient $patient)
     {
+        $patient->history()->delete();
         $patient->delete();
         Toast::info(__('Removed.'));
         return redirect()->route('platform.system.patients');
