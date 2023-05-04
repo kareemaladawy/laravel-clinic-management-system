@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\User;
 use Exception;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PatientResource;
+use App\Models\Patient;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PatientController extends Controller
@@ -27,5 +28,12 @@ class PatientController extends Controller
             return response()->error('not found.', 404);
         }
         return response()->success(['patient' => PatientResource::make($patient)], 'success.', 200);
+    }
+
+    public function search(string $search)
+    {
+        return PatientResource::collection(Patient::whereLike('name', $search)
+            ->whereLike('email', $search)
+            ->get());
     }
 }

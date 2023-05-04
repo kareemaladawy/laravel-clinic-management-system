@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "_id": "2dd91fca-63c3-442a-85d1-7c03adb875f6",
+    "colName": "patients",
+    "created": "2023-05-04T20:09:14.170Z",
+    "sortNum": 10000,
+    "folders": []
+  },
+  {
+    "_id": "8e964de6-4621-40b4-9ded-aa07937182ff",
+    "colName": "Auth",
+    "created": "2023-05-04T20:09:59.637Z",
+    "sortNum": 20000,
+    "folders": []
+  }
+]

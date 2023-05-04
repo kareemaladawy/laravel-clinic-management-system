@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Database\Eloquent\Builder;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Builder::macro('whereLike', function(string $column, string $search) {
+            return $this->orWhere($column, 'LIKE', '%'.$search.'%');
+         });
+         
         Response::macro('info', function($message, $status_code){
             return response()->json([
                 'message' => $message

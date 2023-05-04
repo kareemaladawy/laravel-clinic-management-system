@@ -12,13 +12,15 @@ use App\Http\Controllers\API\User\AppointmentController;
 // Doctor actions
 Route::name('doctor.')->group(function() {
     // register
-    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('register', [AuthController::class, 'register'])->name('register');
     // login
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::middleware(['auth:sanctum'])->group(function(){
         // logout
-        Route::post('/logout', [AuthController::class,'logout'])->name('logout');
+        Route::post('logout', [AuthController::class,'logout'])->name('logout');
         // patients
+        Route::get('patients/search/{search}', [PatientController::class, 'search'])
+            ->name('search-patients');
         Route::apiResource('patients', PatientController::class)->only(['index', 'show']);
         // treatments
         Route::apiResource('treatments', TreatmentController::class)->only(['index', 'show']);
